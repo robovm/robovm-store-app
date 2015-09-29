@@ -1,0 +1,9 @@
+/build/
+/bin/
+.idea
+.gradle
+.settings
+local.properties
+ios/robovm-build
+*.class
+
