@@ -35,8 +35,7 @@ public class ImageScroller extends UIScrollView {
     private List<UIImage> images = new ArrayList<>();
     private int currentIndex;
 
-    public ImageScroller()
-    {
+    public ImageScroller() {
         setPagingEnabled(true);
         setShowsHorizontalScrollIndicator(false);
 
@@ -71,12 +70,9 @@ public class ImageScroller extends UIScrollView {
 
         CGRect frame = getBounds();
         for (UIImage image : images) {
-            UIImageView imageView = new UIImageView(image) {
-                {
-                    setContentMode(UIViewContentMode.ScaleAspectFit);
-                    setFrame(frame);
-                }
-            };
+            UIImageView imageView = new UIImageView(image);
+            imageView.setContentMode(UIViewContentMode.ScaleAspectFit);
+            imageView.setFrame(frame);
             addSubview(imageView);
             imageViews.add(imageView);
             frame.setX(frame.getX() + frame.getWidth());

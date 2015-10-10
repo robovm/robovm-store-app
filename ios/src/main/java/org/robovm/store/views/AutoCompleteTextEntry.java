@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.robovm.apple.uikit.UITextField;
 import org.robovm.apple.uikit.UIViewController;
+import org.robovm.store.util.Action;
 import org.robovm.store.viewcontrollers.StringTableViewController;
 
 public class AutoCompleteTextEntry extends TextEntryView {
@@ -34,6 +35,20 @@ public class AutoCompleteTextEntry extends TextEntryView {
         controller.setSelectionListener((item) -> {
             setValue(item);
         });
+    }
+
+    public AutoCompleteTextEntry(String title, String placeholder, String value, UIViewController presenterView) {
+        this();
+        this.title = title;
+        setPlaceholder(placeholder);
+        setValue(value);
+        setPresenterView(presenterView);
+    }
+
+    public AutoCompleteTextEntry(String title, String placeholder, String value, UIViewController presenterView,
+            Action<String> valueChangeListener) {
+        this(title, placeholder, value, presenterView);
+        setValueChangeListener(valueChangeListener);
     }
 
     @Override

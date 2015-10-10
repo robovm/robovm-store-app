@@ -28,19 +28,15 @@ public class BrightlyBlurredView extends UIView {
     private final UIView accentView;
     private final UIToolbar toolbar;
 
-    public BrightlyBlurredView()
-    {
+    public BrightlyBlurredView() {
         toolbar = new UIToolbar();
         toolbar.setOpaque(true);
         getLayer().addSublayer(blurLayer = toolbar.getLayer());
 
-        accentView = new UIView() {
-            {
-                setBackgroundColor(getTintColor());
-                setAlpha(.7f);
-                setOpaque(false);
-            }
-        };
+        accentView = new UIView();
+        accentView.setBackgroundColor(getTintColor());
+        accentView.setAlpha(.7f);
+        accentView.setOpaque(false);
 
         blurLayer.insertSublayerAt(accentLayer = accentView.getLayer(), 1);
         getLayer().setMasksToBounds(true);

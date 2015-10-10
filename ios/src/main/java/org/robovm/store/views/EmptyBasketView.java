@@ -29,19 +29,15 @@ public class EmptyBasketView extends UIView {
     private UIImageView image;
     private UILabel text;
 
-    public EmptyBasketView()
-    {
+    public EmptyBasketView() {
         setBackgroundColor(Colors.White);
         addSubview(image = new UIImageView(UIImage.getImage("empty-basket")));
-        addSubview(text = new UILabel() {
-            {
-                setText("Your basket is empty");
-                setTextColor(Colors.LightGray);
-                setFont(UIFont.getBoldSystemFont(20f));
-                setTextAlignment(NSTextAlignment.Center);
-                setBackgroundColor(Colors.Clear);
-            }
-        });
+        addSubview(text = new UILabel());
+        text.setText("Your basket is empty");
+        text.setTextColor(Colors.LightGray);
+        text.setFont(UIFont.getBoldSystemFont(20f));
+        text.setTextAlignment(NSTextAlignment.Center);
+        text.setBackgroundColor(Colors.Clear);
         text.sizeToFit();
     }
 

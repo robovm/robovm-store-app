@@ -77,21 +77,15 @@ public class StringUIPicker extends UIPickerView {
     }
 
     public void showPicker() {
-        actionSheet = new UIActionSheet() {
-            {
-                setBackgroundColor(Colors.Clear);
-            }
-        };
+        actionSheet = new UIActionSheet();
+        actionSheet.setBackgroundColor(Colors.Clear);
 
         UIView parentView = UIApplication.getSharedApplication().getKeyWindow().getRootViewController().getView();
 
         // Creates a transparent grey background who catches the touch actions
         // (and add more style).
-        UIView dimBackgroundView = new UIView(parentView.getBounds()) {
-            {
-                setBackgroundColor(Colors.Gray.addAlpha(0.5f));
-            }
-        };
+        UIView dimBackgroundView = new UIView(parentView.getBounds());
+        dimBackgroundView.setBackgroundColor(Colors.Gray.addAlpha(0.5f));
 
         final float titleBarHeight = 44;
         CGSize actionSheetSize = new CGSize(parentView.getFrame().getWidth(), getFrame().getHeight() + titleBarHeight);
@@ -106,30 +100,24 @@ public class StringUIPicker extends UIPickerView {
 
         setFrame(new CGRect(0, 1, actionSheetSize.getWidth(), actionSheetSize.getHeight() - titleBarHeight));
 
-        UIToolbar toolbarPicker = new UIToolbar(new CGRect(0, 0, actionSheet.getFrame().getWidth(), titleBarHeight)) {
-            {
-                setClipsToBounds(true);
-                setItems(new NSArray<UIBarButtonItem>(
-                        new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),
-                        new UIBarButtonItem(UIBarButtonSystemItem.Done, (barButtonItem) -> {
-                            UIView.animate(.25,
-                                    () -> actionSheet.setFrame(actionSheetFrameHidden),
-                                    (finish) -> {
-                                        dimBackgroundView.removeFromSuperview();
-                                        actionSheet.removeFromSuperview();
-                                    });
-                        })
+        UIToolbar toolbarPicker = new UIToolbar(new CGRect(0, 0, actionSheet.getFrame().getWidth(), titleBarHeight));
+        toolbarPicker.setClipsToBounds(true);
+        toolbarPicker.setItems(new NSArray<UIBarButtonItem>(
+                new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),
+                new UIBarButtonItem(UIBarButtonSystemItem.Done, (barButtonItem) -> {
+                    UIView.animate(.25,
+                            () -> actionSheet.setFrame(actionSheetFrameHidden),
+                            (finish) -> {
+                                dimBackgroundView.removeFromSuperview();
+                                actionSheet.removeFromSuperview();
+                            });
+                })
                 ));
-            }
-        };
 
         // Creates a blur background using the toolbar trick.
         UIToolbar toolbarBg = new UIToolbar(new CGRect(0, 0, actionSheet.getFrame().getWidth(), actionSheet.getFrame()
-                .getHeight())) {
-            {
-                setClipsToBounds(true);
-            }
-        };
+                .getHeight()));
+        toolbarBg.setClipsToBounds(true);
 
         actionSheet.addSubviews(toolbarBg, this, toolbarPicker);
         parentView.addSubviews(dimBackgroundView, actionSheet);
@@ -139,8 +127,8 @@ public class StringUIPicker extends UIPickerView {
         UIView.animate(.25, () -> actionSheet.setFrame(actionSheetFrameDisplayed));
     }
 
-    public void setSelectionListener(Action<String> selectionListener) {
-        this.selectionListener = selectionListener;
+    public void setSelectionListener(Action<String> listener) {
+        this.selectionListener = listener;
     }
 
     private class PickerModel extends UIPickerViewModel {

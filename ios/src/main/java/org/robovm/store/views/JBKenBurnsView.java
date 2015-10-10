@@ -40,20 +40,18 @@ public class JBKenBurnsView extends UIView {
     private static final int IMAGE_BUFFER = 3;
     private final LinkedList<UIView> views = new LinkedList<>();
     private final Random random = new Random();
-    private final List<UIImage> images = new ArrayList<>();
+    private List<UIImage> images = new ArrayList<>();
     private int currentIndex;
     private NSTimer timer;
 
-    private double imageDuration;
-    private boolean shouldLoop;
-    private boolean isLandscape;
+    private double imageDuration = 12;
+    private boolean shouldLoop = true;
+    private boolean isLandscape = true;
 
     private AnimationListener listener;
 
-    public JBKenBurnsView() {
-        imageDuration = 12;
-        shouldLoop = true;
-        isLandscape = true;
+    public JBKenBurnsView(CGRect frame) {
+        super(frame);
         setBackgroundColor(Colors.Clear);
         getLayer().setMasksToBounds(true);
     }
@@ -91,6 +89,10 @@ public class JBKenBurnsView extends UIView {
 
     public void setLandscape(boolean landscape) {
         this.isLandscape = landscape;
+    }
+
+    public void setImages(List<UIImage> images) {
+        this.images = images;
     }
 
     public void animate() {
@@ -186,14 +188,12 @@ public class JBKenBurnsView extends UIView {
         double optimusWidth = (imageWidth * resizeRatio) * ENLARGE_RATIO;
         double optimusHeight = (imageHeight * resizeRatio) * ENLARGE_RATIO;
 
-        UIImageView imageView = new UIImageView() {
-            {
-                setFrame(new CGRect(0, 0, optimusWidth, optimusHeight));
-                setBackgroundColor(Colors.Clear);
-            }
-        };
+        UIImageView imageView = new UIImageView();
+        imageView.setFrame(new CGRect(0, 0, optimusWidth, optimusHeight));
+        imageView.setBackgroundColor(Colors.Clear);
+
         double maxMoveX = Math.min(optimusWidth - frameWidth, 50f);
-        double maxMoveY = Math.min(optimusHeight - frameHeight, 50f) * 2 / 3;
+        double maxMoveY = Math.min(optimusHeight - frameHeight, 50f) * 2f / 3;
 
         float rotation = random.nextInt(9) / 100;
 
@@ -225,7 +225,7 @@ public class JBKenBurnsView extends UIView {
             break;
         default:
             originX = frameWidth - optimusWidth;
-            originY = 0;// Math.max(frameHeight - (optimusHeight),frameHeight *
+            originY = 0;// Math.max(frameHeight - optimusHeight,frameHeight *
                         // 1/3);
             zoomInX = 1.2f;
             zoomInY = 1.2f;
@@ -234,24 +234,16 @@ public class JBKenBurnsView extends UIView {
             break;
         }
 
-        final double px = originX, py = originY;
-
-        CALayer picLayer = new CALayer() {
-            {
-                setContents(image.getCGImage());
-                setAnchorPoint(CGPoint.Zero());
-                setBounds(imageView.getBounds());
-                setPosition(new CGPoint(px, py));
-            }
-        };
+        CALayer picLayer = new CALayer();
+        picLayer.setContents(image.getCGImage());
+        picLayer.setAnchorPoint(CGPoint.Zero());
+        picLayer.setBounds(imageView.getBounds());
+        picLayer.setPosition(new CGPoint(originX, originY));
         imageView.getLayer().addSublayer(picLayer);
 
-        CATransition animation = new CATransition() {
-            {
-                setDuration(1);
-                setType(CATransitionType.Fade);
-            }
-        };
+        CATransition animation = new CATransition();
+        animation.setDuration(1);
+        animation.setType(CATransitionType.Fade);
         getLayer().addAnimation(animation, null);
 
         views.add(imageView);

@@ -19,13 +19,14 @@ package org.robovm.store.views;
 import org.robovm.apple.coregraphics.CGRect;
 import org.robovm.apple.uikit.UIControl.OnTouchUpInsideListener;
 import org.robovm.apple.uikit.UIFont;
+import org.robovm.apple.uikit.UIImage;
 import org.robovm.store.util.Colors;
 
 public class BottomButtonView extends BrightlyBlurredView {
-    private static final float PADDING = 15f;
+    public static final float HEIGHT = 75;
+    private static final float PADDING = 15;
 
     private ImageButton button;
-    private OnTouchUpInsideListener buttonTapListener = (button, event) -> {};
 
     public BottomButtonView() {
         addSubview(button = new ImageButton());
@@ -33,9 +34,14 @@ public class BottomButtonView extends BrightlyBlurredView {
         button.getLayer().setCornerRadius(5f);
         button.setFont(UIFont.getBoldSystemFont(UIFont.getButtonFontSize()));
         button.sizeToFit();
-        button.addOnTouchUpInsideListener(buttonTapListener);
         setTintColor(Colors.White);
         setAccentColorIntensity(0f);
+    }
+
+    public BottomButtonView(String text, OnTouchUpInsideListener tapListener) {
+        this();
+        setButtonText(text);
+        setButtonTapListener(tapListener);
     }
 
     public String getButtonText() {
@@ -46,8 +52,16 @@ public class BottomButtonView extends BrightlyBlurredView {
         button.setText(text);
     }
 
-    public void setButtonTapListener(OnTouchUpInsideListener buttonTapListener) {
-        this.buttonTapListener = buttonTapListener;
+    public void setButtonImage(UIImage image) {
+        button.setImage(image);
+    }
+
+    public void setButtonTapListener(OnTouchUpInsideListener listener) {
+        button.addOnTouchUpInsideListener(listener);
+    }
+
+    public ImageButton getButton() {
+        return button;
     }
 
     @Override

@@ -28,6 +28,7 @@ public class Colors {
     public static final UIColor Green = fromColor(Color.Green);
     public static final UIColor Gray = fromColor(Color.Gray);
     public static final UIColor LightGray = fromColor(Color.LightGray);
+    public static final UIColor DarkGray = UIColor.darkGray();
 
     private static UIColor fromColor(Color color) {
         return UIColor.fromRGBA(color.r, color.g, color.b, 1);

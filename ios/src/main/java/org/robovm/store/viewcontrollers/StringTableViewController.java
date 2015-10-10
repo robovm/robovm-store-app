@@ -60,7 +60,8 @@ public class StringTableViewController extends UITableViewController {
     }
 
     public void setItems(List<String> items) {
-        this.filteredItems = this.items = items;
+        this.items = items;
+        this.filteredItems = new ArrayList<>(items);
         getTableView().reloadData();
     }
 

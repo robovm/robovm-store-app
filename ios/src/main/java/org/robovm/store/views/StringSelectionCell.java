@@ -109,6 +109,10 @@ public class StringSelectionCell extends UITableViewCell {
         return pickerView;
     }
 
+    public void setSelectionListener(Action<String> listener) {
+        this.selectionListener = listener;
+    }
+
     public void tap() {
         // Don't show the picker when we don't have options.
         if (getItems().size() == 1) {

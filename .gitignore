@@ -7,3 +7,6 @@ local.properties
 ios/robovm-build
 *.class
 
+core/bin
+ios/robovm-logs
+ios/bin

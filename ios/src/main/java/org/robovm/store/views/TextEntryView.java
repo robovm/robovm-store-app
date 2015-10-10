@@ -33,12 +33,30 @@ public class TextEntryView extends UIView implements UITextFieldDelegate {
     public TextEntryView() {
         super(new CGRect(0, 0, 320, 44));
 
-        textField = new UITextField() {
-            {
-                setBorderStyle(UITextBorderStyle.RoundedRect);
-                setDelegate(TextEntryView.this);
-            }
-        };
+        textField = new UITextField();
+        textField.setBorderStyle(UITextBorderStyle.RoundedRect);
+        textField.setDelegate(this);
+        addSubview(textField);
+    }
+
+    public TextEntryView(String placeholder, String value) {
+        this();
+        setPlaceholder(placeholder);
+        setValue(value);
+    }
+
+    public TextEntryView(String placeholder, String value, UITextAutocapitalizationType type) {
+        this();
+        setPlaceholder(placeholder);
+        setValue(value);
+        setAutocapitalizationType(type);
+    }
+
+    public TextEntryView(String placeholder, String value, UIKeyboardType type) {
+        this();
+        setPlaceholder(placeholder);
+        setValue(value);
+        setKeyboardType(type);
     }
 
     public UIKeyboardType getKeyboardType() {
@@ -71,7 +89,9 @@ public class TextEntryView extends UIView implements UITextFieldDelegate {
 
     public void setValue(String value) {
         textField.setText(value);
-        valueChangeListener.invoke(textField.getText());
+        if (valueChangeListener != null) {
+            valueChangeListener.invoke(textField.getText());
+        }
     }
 
     public void setValueChangeListener(Action<String> listener) {

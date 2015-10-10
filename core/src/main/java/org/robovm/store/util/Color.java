@@ -27,8 +27,8 @@ class Color {
     public double r, g, b;
 
     public Color(int hex) {
-        r = ((hex >> 16) & 0xFF) / 255;
-        g = ((hex >> 8) & 0xFF) / 255;
-        b = (hex & 0xFF) / 255;
+        r = ((hex & 0xFF0000) >> 16) / 255f;
+        g = ((hex & 0xFF00) >> 8) / 255f;
+        b = (hex & 0xFF) / 255f;
     }
 }

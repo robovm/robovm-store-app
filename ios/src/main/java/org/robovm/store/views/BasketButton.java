@@ -38,11 +38,8 @@ public class BasketButton extends UIControl {
     private final UIImageView imageView;
 
     public BasketButton() {
-        imageView = new UIImageView(UIImage.getImage("cart").newImage(UIImageRenderingMode.AlwaysTemplate)) {
-            {
-                setTintColor(Colors.White);
-            }
-        };
+        imageView = new UIImageView(UIImage.getImage("cart").newImage(UIImageRenderingMode.AlwaysTemplate));
+        imageView.setTintColor(Colors.White);
         addSubview(imageView);
 
         badge = new BadgeView(new CGRect(20, 5, 0, 0));
@@ -53,7 +50,7 @@ public class BasketButton extends UIControl {
         return badge.getBadgeNumber();
     }
 
-    private void setItemsCount(int count) {
+    public void setItemsCount(int count) {
         badge.setBadgeNumber(count);
     }
 

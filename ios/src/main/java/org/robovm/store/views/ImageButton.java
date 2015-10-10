@@ -41,17 +41,18 @@ public class ImageButton extends UIControl {
         imageView = new UIImageView();
         addSubview(imageView);
 
-        label = new UILabel() {
-            {
-                setTextColor(getTintColor());
-            }
-        };
+        label = new UILabel();
+        label.setTextColor(getTintColor());
         addSubview(label);
 
         CALayer layer = getLayer();
         layer.setBorderColor(getTintColor().getCGColor());
         layer.setBorderWidth(1f);
         layer.setCornerRadius(5f);
+    }
+
+    public UIImageView getImageView() {
+        return imageView;
     }
 
     @Override
