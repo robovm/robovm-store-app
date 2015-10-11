@@ -23,7 +23,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class StoreAppActivity extends Activity {
-    private CounterStore counterStore = new CounterStore();
+    int counter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +34,7 @@ public class StoreAppActivity extends Activity {
         final Button counterButton = (Button) findViewById(R.id.counterButton);
 
         counterButton.setOnClickListener((view) -> {
-            counterStore.add(1);
-            counterTextView.setText("Click Nr. " + counterStore.get());
+            counterTextView.setText("Click Nr. " + counter++);
         });
     }
 }
