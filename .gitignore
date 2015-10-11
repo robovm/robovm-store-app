@@ -1,6 +1,10 @@
 /build/
 /bin/
+.settings/
+.classpath
+.project
 .idea
+*.iml
 .gradle
 .settings
 local.properties
