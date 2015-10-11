@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <sample>  
-	<title>RoboVM Store</title>
+	<title>RoboVM Store App</title>
 	<description>A cross-platform t-shirt store app for iOS and Android.</description>      
 	<isCrossPlatform>true</isCrossPlatform>
 	<featured>true</featured>
