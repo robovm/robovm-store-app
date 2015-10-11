@@ -1,3 +1,18 @@
+import groovy.json.JsonSlurper
+
+buildscript {
+	def versionFile = file('versions.json')
+    def json = new JsonSlurper().parseText(versionFile.text)
+
+    ext {
+        gdxVersion = json.libGDXVersion
+        roboVMVersion = json.roboVMVersion
+        androidGradleToolsVersion = json.androidGradleToolsVersion
+        androidBuildToolsVersion = json.androidBuildToolsVersion
+        androidSDKVersion = Integer.parseInt(json.androidSDKVersion)
+    }
+}
+
 task wrapper(type: Wrapper) {
     gradleVersion = '2.6'
 }

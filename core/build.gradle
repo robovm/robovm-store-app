@@ -7,10 +7,9 @@ buildscript {
 plugins {
     id "me.tatarka.retrolambda" version "3.2.2"
 }
-
 apply plugin: 'java'
 
-version 'unspecified'
+version '1.0'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 

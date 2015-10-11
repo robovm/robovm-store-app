@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.2.3'
+        classpath 'com.android.tools.build:gradle:' + androidGradleToolsVersion
     }
 }
 
@@ -19,13 +19,13 @@ repositories {
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    compileSdkVersion androidSDKVersion
+    buildToolsVersion androidBuildToolsVersion
 
     defaultConfig {
-        applicationId "com.mycompany.fortune.android"
+        applicationId "org.robovm.store"
         minSdkVersion 9
-        targetSdkVersion 23
+        targetSdkVersion androidSDKVersion
         versionCode 1
         versionName "1.0"
     }
