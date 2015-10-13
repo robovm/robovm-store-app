@@ -71,7 +71,7 @@ public class ShippingAddressViewController extends UITableViewController {
         cells.add(new CustomViewCell(lastNameField = new TextEntryView("Last Name", user.getLastName())));
 
         cells.add(new CustomViewCell(phoneNumberField = new TextEntryView("Phone Number", user.getPhone(),
-                UIKeyboardType.NumberPad)));
+                UIKeyboardType.PhonePad)));
 
         cells.add(new CustomViewCell(address1Field = new TextEntryView("Address", user.getAddress1(),
                 UITextAutocapitalizationType.Words)));
