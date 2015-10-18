@@ -96,8 +96,8 @@ public class StoreApp extends UIApplicationDelegateAdapter {
 
     public void showProductDetail(Product product) {
         ProductDetailViewController productDetails = new ProductDetailViewController(product);
-        productDetails.setAddedToBasketListener((order) -> {
-            RoboVMWebService.getInstance().addToBasket(order);
+        productDetails.setAddToBasketListener((order) -> {
+            RoboVMWebService.getInstance().getBasket().add(order);
             updateProductsCount();
         });
         navigation.pushViewController(productDetails, true);

@@ -263,7 +263,7 @@ public class ProductDetailViewController extends UITableViewController {
         return cells;
     }
 
-    public void setAddedToBasketListener(Action<Order> listener) {
+    public void setAddToBasketListener(Action<Order> listener) {
         this.addedToBasket = listener;
     }
 

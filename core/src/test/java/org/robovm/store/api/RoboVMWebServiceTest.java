@@ -31,12 +31,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.robovm.store.api.RoboVMWebService.RoboVMAPI;
-import org.robovm.store.model.Order;
-import org.robovm.store.model.Product;
-import org.robovm.store.model.ProductColor;
-import org.robovm.store.model.ProductSize;
-import org.robovm.store.model.ProductType;
-import org.robovm.store.model.User;
+import org.robovm.store.model.*;
 
 import retrofit.Call;
 import retrofit.Response;
@@ -138,11 +133,11 @@ public class RoboVMWebServiceTest {
         user.setPhone("+12015612823");
         user.setCountry("US");
 
-        List<Order> orders = new ArrayList<>();
+        Basket basket = new Basket();
         Product product = products.get(0);
-        orders.add(new Order(product, product.getSizes().get(0), product.getColors().get(0)));
+        basket.add(new Order(product, product.getSizes().get(0), product.getColors().get(0)));
 
-        Call<APIResponse> orderCall = api.order(new OrderRequest(new AuthToken(authToken), user, orders));
+        Call<APIResponse> orderCall = api.order(new OrderRequest(new AuthToken(authToken), user, basket));
         APIResponse orderResponse = orderCall.execute().body();
         assertTrue(orderResponse.isSuccess()
                 || (orderResponse.getErrors().size() == 1 && orderResponse.getErrors().get(0).getMessage()

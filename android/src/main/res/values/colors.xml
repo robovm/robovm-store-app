@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+	<color name="robo_purple">#B455B6</color>
+	<color name="robo_blue">#3498DB</color>
+	<color name="robo_dark_blue">#2C3E50</color>
+	<color name="robo_green">#77D065</color>
+	<color name="robo_gray">#738182</color>
+	<color name="robo_light_gray">#B4BCBC</color>
+</resources>

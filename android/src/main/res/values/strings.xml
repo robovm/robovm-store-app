@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">RoboVM Store App</string>
+    <string name="brag_on">Brag on:</string>
+    <string name="brag_to_friends">Brag to Friends</string>
 </resources>

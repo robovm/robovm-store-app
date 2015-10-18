@@ -24,9 +24,11 @@ class Color {
     public static final Color Gray = new Color(0x738182);
     public static final Color LightGray = new Color(0xB4BCBC);
 
+    public int hex;
     public double r, g, b;
 
     public Color(int hex) {
+        this.hex = hex;
         r = ((hex & 0xFF0000) >> 16) / 255f;
         g = ((hex & 0xFF00) >> 8) / 255f;
         b = (hex & 0xFF) / 255f;

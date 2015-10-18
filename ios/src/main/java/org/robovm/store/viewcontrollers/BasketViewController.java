@@ -41,6 +41,7 @@ import org.robovm.apple.uikit.UITableViewModel;
 import org.robovm.apple.uikit.UITableViewRowAnimation;
 import org.robovm.apple.uikit.UIView;
 import org.robovm.apple.uikit.UIViewContentMode;
+import org.robovm.store.model.Basket;
 import org.robovm.store.model.Order;
 import org.robovm.store.util.Colors;
 import org.robovm.store.util.ImageCache;
@@ -48,20 +49,20 @@ import org.robovm.store.views.BottomButtonView;
 import org.robovm.store.views.EmptyBasketView;
 
 public class BasketViewController extends UITableViewController {
-    private List<Order> basket;
+    private Basket basket;
     private EmptyBasketView emptyCartImageView;
     private BottomButtonView bottomView;
     private final UILabel totalAmount;
 
     private Runnable checkout;
 
-    public BasketViewController(List<Order> basket) {
+    public BasketViewController(Basket basket) {
         setTitle("Your Basket");
         // This hides the back button text when you leave this View Controller
         getNavigationItem().setBackBarButtonItem(new UIBarButtonItem("", UIBarButtonItemStyle.Plain));
 
         UITableView tableView = getTableView();
-        tableView.setModel(new BasketTableModel(this.basket = basket, () -> checkEmpty()));
+        tableView.setModel(new BasketTableModel(this.basket = basket, this::checkEmpty));
         tableView.setSeparatorStyle(UITableViewCellSeparatorStyle.None);
         tableView.setRowHeight(75);
         tableView.setTableFooterView(new UIView(new CGRect(0, 0, 0, BottomButtonView.HEIGHT)));
@@ -136,9 +137,9 @@ public class BasketViewController extends UITableViewController {
     static class BasketTableModel extends UITableViewModel {
         private final Runnable rowDeleted;
 
-        private final List<Order> basket;
+        private final Basket basket;
 
-        public BasketTableModel(List<Order> basket, Runnable rowDeleted) {
+        public BasketTableModel(Basket basket, Runnable rowDeleted) {
             this.basket = basket;
             this.rowDeleted = rowDeleted;
         }

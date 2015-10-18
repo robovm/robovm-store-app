@@ -15,25 +15,20 @@
  */
 package org.robovm.store.api;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
 import org.robovm.store.api.RoboVMWebService.ActionWrapper.ActionWrapperImpl;
-import org.robovm.store.model.Order;
+import org.robovm.store.model.Basket;
 import org.robovm.store.model.Product;
 import org.robovm.store.model.User;
 import org.robovm.store.util.Action;
 import org.robovm.store.util.ImageCache;
-
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.GsonConverterFactory;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit.*;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class RoboVMWebService {
     private static final RoboVMWebService instance = new RoboVMWebService();
@@ -47,13 +42,12 @@ public class RoboVMWebService {
     private static final String API_URL = "https://store-app.robovm.com/api/";
     private static final String API_TEST_URL = "https://store-app.robovm.com/test/";
 
-    private Retrofit retrofit;
     private RoboVMAPI api;
 
     private AuthToken authToken;
     private User currentUser;
     private List<Product> products;
-    private final List<Order> basket = new ArrayList<>();
+    private final Basket basket = new Basket();
 
     private ActionWrapper invokation = new ActionWrapperImpl();
 
@@ -63,7 +57,7 @@ public class RoboVMWebService {
 
     public RoboVMWebService setup(boolean test) {
         // Create a REST adapter which points to the RoboVM API.
-        retrofit = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(test ? API_TEST_URL : API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -96,7 +90,7 @@ public class RoboVMWebService {
                             authToken = new AuthToken(body.getAuthToken(), () -> {
                                 // Token timed out.
                                 // TODO token timed out
-                                });
+                            });
                         }
                     }
                     if (success) {
@@ -189,15 +183,7 @@ public class RoboVMWebService {
         return currentUser;
     }
 
-    public void addToBasket(Order order) {
-        basket.add(new Order(order));
-    }
-
-    public void clearBasket() {
-        basket.clear();
-    }
-
-    public List<Order> getBasket() {
+    public Basket getBasket() {
         return basket;
     }
 
@@ -227,7 +213,7 @@ public class RoboVMWebService {
     public interface ActionWrapper {
         <T> void invoke(Action<T> action, T result);
 
-        static class ActionWrapperImpl implements ActionWrapper {
+        class ActionWrapperImpl implements ActionWrapper {
             @Override
             public <T> void invoke(Action<T> action, T result) {
                 action.invoke(result);

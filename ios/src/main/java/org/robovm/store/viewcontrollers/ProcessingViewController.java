@@ -69,7 +69,7 @@ public class ProcessingViewController extends UIViewController {
         super.loadView();
 
         getView().setBackgroundColor(Colors.Gray);
-        getView().addSubview(processView = new ProcessingView(() -> processOrder()));
+        getView().addSubview(processView = new ProcessingView(this::processOrder));
     }
 
     @Override
@@ -97,7 +97,7 @@ public class ProcessingViewController extends UIViewController {
 
         RoboVMWebService.getInstance().placeOrder(user, (response) -> {
             if (response.isSuccess()) {
-                RoboVMWebService.getInstance().clearBasket();
+                RoboVMWebService.getInstance().getBasket().clear();
 
                 processView.setStatus("Your order has been placed!");
                 processView.stopGear();
@@ -213,7 +213,7 @@ public class ProcessingViewController extends UIViewController {
             tryAgain.setTintColor(Colors.White);
             tryAgain.setText("Try Again");
             tryAgain.addOnTouchUpInsideListener((b, e) -> {
-                animate(.3, () -> tryAgain.removeFromSuperview());
+                animate(.3, tryAgain::removeFromSuperview);
                 if (tryAgainListener != null) {
                     tryAgainListener.run();
                 }
@@ -396,15 +396,13 @@ public class ProcessingViewController extends UIViewController {
                 check.setAlpha(1);
                 twitter.setAlpha(1);
                 done.setAlpha(1);
-            }, (s) -> {
-                animate(.2, () -> {
-                    UIView.setAnimationCurve(UIViewAnimationCurve.EaseInOut);
-                    yOffset = 0;
-                    layoutSubviews();
-                    label1.setAlpha(1);
-                    label2.setAlpha(1);
-                });
-            });
+            }, (s) -> animate(.2, () -> {
+                UIView.setAnimationCurve(UIViewAnimationCurve.EaseInOut);
+                yOffset = 0;
+                layoutSubviews();
+                label1.setAlpha(1);
+                label2.setAlpha(1);
+            }));
         }
     }
 }

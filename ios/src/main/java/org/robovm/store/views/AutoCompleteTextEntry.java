@@ -32,9 +32,7 @@ public class AutoCompleteTextEntry extends TextEntryView {
 
     public AutoCompleteTextEntry() {
         controller = new StringTableViewController();
-        controller.setSelectionListener((item) -> {
-            setValue(item);
-        });
+        controller.setSelectionListener(this::setValue);
     }
 
     public AutoCompleteTextEntry(String title, String placeholder, String value, UIViewController presenterView) {

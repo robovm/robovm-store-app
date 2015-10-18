@@ -21,12 +21,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.robovm.apple.foundation.NSIndexPath;
-import org.robovm.apple.uikit.UISearchBar;
-import org.robovm.apple.uikit.UISearchBarDelegateAdapter;
-import org.robovm.apple.uikit.UITableView;
-import org.robovm.apple.uikit.UITableViewCell;
-import org.robovm.apple.uikit.UITableViewCellStyle;
-import org.robovm.apple.uikit.UITableViewController;
+import org.robovm.apple.uikit.*;
 import org.robovm.store.util.Action;
 
 public class StringTableViewController extends UITableViewController {

@@ -17,6 +17,7 @@ package org.robovm.store.api;
 
 import java.util.List;
 
+import org.robovm.store.model.Basket;
 import org.robovm.store.model.Order;
 import org.robovm.store.model.User;
 
@@ -33,7 +34,7 @@ public class OrderRequest {
     final String country;
     final List<Order> products;
 
-    public OrderRequest(AuthToken authToken, User user, List<Order> products) {
+    public OrderRequest(AuthToken authToken, User user, Basket basket) {
         this.authToken = authToken.getTokenString();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
@@ -44,6 +45,6 @@ public class OrderRequest {
         this.state = user.getState();
         this.phone = user.getPhone();
         this.country = user.getCountry();
-        this.products = products;
+        this.products = basket.getOrders();
     }
 }
