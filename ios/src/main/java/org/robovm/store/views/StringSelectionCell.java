@@ -18,6 +18,7 @@ package org.robovm.store.views;
 
 import java.util.List;
 
+import org.robovm.apple.uikit.UIFont;
 import org.robovm.apple.uikit.UITableViewCell;
 import org.robovm.apple.uikit.UITableViewCellAccessoryType;
 import org.robovm.apple.uikit.UITableViewCellSelectionStyle;
@@ -39,7 +40,9 @@ public class StringSelectionCell extends UITableViewCell {
         this.pickerView = pickerView;
 
         setSelectionStyle(UITableViewCellSelectionStyle.None);
-        getTextLabel().setTextColor(Colors.Purple);
+        getTextLabel().setTextColor(Colors.Gray);
+        getTextLabel().setFont(UIFont.getSystemFont(16));
+        getDetailTextLabel().setFont(UIFont.getBoldSystemFont(16));
         setAccessoryType(UITableViewCellAccessoryType.DisclosureIndicator);
 
         picker = new StringUIPicker();
@@ -60,13 +63,11 @@ public class StringSelectionCell extends UITableViewCell {
 
         switch (items.size()) {
         case 1:
-            getDetailTextLabel().setTextColor(Colors.Gray);
-//            setUserInteractionEnabled(false);
+            getDetailTextLabel().setTextColor(Colors.LightGray);
             setAccessoryType(UITableViewCellAccessoryType.None);
             break;
         default:
-            getDetailTextLabel().setTextColor(Colors.Black);
-//            setUserInteractionEnabled(true);
+            getDetailTextLabel().setTextColor(Colors.Gray);
             setAccessoryType(UITableViewCellAccessoryType.DisclosureIndicator);
             break;
         }

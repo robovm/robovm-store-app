@@ -18,11 +18,11 @@ package org.robovm.store.util;
 
 class Color {
     public static final Color Purple = new Color(0xB455B6);
-    public static final Color Blue = new Color(0x3498DB);
+    public static final Color Blue = new Color(0x00AEEF);
     public static final Color DarkBlue = new Color(0x2C3E50);
-    public static final Color Green = new Color(0x77D065);
-    public static final Color Gray = new Color(0x738182);
-    public static final Color LightGray = new Color(0xB4BCBC);
+    public static final Color Green = new Color(0x93C624);
+    public static final Color Gray = new Color(0x444444);
+    public static final Color LightGray = new Color(0x666666);
 
     public int hex;
     public double r, g, b;

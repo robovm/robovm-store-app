@@ -84,7 +84,7 @@ public class StoreApp extends UIApplicationDelegateAdapter {
         navigation = new UINavigationController(productViewController);
 
         navigation.getNavigationBar().setTintColor(Colors.White);
-        navigation.getNavigationBar().setBarTintColor(Colors.Blue);
+        navigation.getNavigationBar().setBarTintColor(Colors.Green);
 
         window.setRootViewController(navigation);
         window.makeKeyAndVisible();
@@ -117,7 +117,7 @@ public class StoreApp extends UIApplicationDelegateAdapter {
 
     public void showLogin() {
         LoginViewController loginViewController = new LoginViewController();
-        loginViewController.setLoginSucceededListener(this::showAddress);
+        loginViewController.setLoginSuccessListener(this::showAddress);
         navigation.pushViewController(loginViewController, true);
     }
 

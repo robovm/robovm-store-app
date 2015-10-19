@@ -37,11 +37,10 @@ public class ProductDescriptionView extends UIView {
     }
 
     public ProductDescriptionView() {
-//        setTranslatesAutoresizingMaskIntoConstraints(false);
         name = new UILabel();
         name.setText("Name");
         name.setBackgroundColor(Colors.Clear);
-        name.setTextColor(Colors.DarkGray);
+        name.setTextColor(Colors.Gray);
         name.setFont(UIFont.getSystemFont(25));
         name.setTranslatesAutoresizingMaskIntoConstraints(false);
         name.sizeToFit();
@@ -49,9 +48,9 @@ public class ProductDescriptionView extends UIView {
 
         descriptionLabel = new UILabel();
         descriptionLabel.setBackgroundColor(Colors.Clear);
-        descriptionLabel.setTextColor(Colors.DarkGray);
+        descriptionLabel.setTextColor(Colors.LightGray);
         descriptionLabel.setTranslatesAutoresizingMaskIntoConstraints(false);
-        descriptionLabel.setFont(UIFont.getSystemFont(12));
+        descriptionLabel.setFont(UIFont.getSystemFont(14));
         descriptionLabel.setLineBreakMode(NSLineBreakMode.WordWrapping);
         descriptionLabel.setNumberOfLines(0);
         addSubview(descriptionLabel);

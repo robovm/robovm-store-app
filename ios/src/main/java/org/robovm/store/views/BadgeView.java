@@ -41,7 +41,7 @@ public class BadgeView extends UILabel {
 
     private void setup() {
         setBackgroundColor(Colors.Clear);
-        setTextColor(Colors.Blue);
+        setTextColor(Colors.Green);
         setFont(UIFont.getBoldSystemFont(10f));
         setUserInteractionEnabled(false);
         getLayer().setCornerRadius(height / 2);

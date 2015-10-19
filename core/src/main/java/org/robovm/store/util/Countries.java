@@ -47,6 +47,18 @@ public class Countries {
         }
     }
 
+    public static Country getCountryForCode(String code) {
+        if (countries == null) {
+            return null;
+        }
+        for (Country country : countries) {
+            if (country.getCode().equals(code)) {
+                return country;
+            }
+        }
+        return null;
+    }
+
     public static Country getCountryForName(String name) {
         if (countries == null) {
             return null;

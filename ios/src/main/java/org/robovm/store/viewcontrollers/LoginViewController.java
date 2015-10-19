@@ -44,7 +44,7 @@ public class LoginViewController extends UIViewController {
 
     private double keyboardOffset = 0;
 
-    private Runnable loginSucceeded;
+    private Runnable loginSuccessListener;
 
     public LoginViewController() {
         setTitle("Log in");
@@ -129,8 +129,8 @@ public class LoginViewController extends UIViewController {
 //            BTProgressHUD.dismiss (); TODO
 
                 if (success) {
-                    if (loginSucceeded != null) {
-                        loginSucceeded.run();
+                    if (loginSuccessListener != null) {
+                        loginSuccessListener.run();
                     }
                 } else {
                     UIAlertView alert = new UIAlertView("Could not log in!",
@@ -147,7 +147,7 @@ public class LoginViewController extends UIViewController {
             });
     }
 
-    public void setLoginSucceededListener(Runnable listener) {
-        this.loginSucceeded = listener;
+    public void setLoginSuccessListener(Runnable listener) {
+        this.loginSuccessListener = listener;
     }
 }

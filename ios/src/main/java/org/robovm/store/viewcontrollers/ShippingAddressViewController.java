@@ -85,8 +85,17 @@ public class ShippingAddressViewController extends UITableViewController {
         cells.add(new CustomViewCell(zipCodeField = new TextEntryView("Postal Code", user.getZipCode(),
                 UIKeyboardType.NumbersAndPunctuation)));
 
+        String countryName = user.getCountry();
+        if (countryName != null) {
+            Country c = Countries.getCountryForCode(countryName);
+            if (c != null) {
+                countryName = c.getName();
+            } else {
+                countryName = null;
+            }
+        }
         cells.add(new CustomViewCell(countryField = new AutoCompleteTextEntry(
-                "Country", "Select your Country", user.getCountry(), this, (value) -> getStates())));
+                "Country", "Select your Country", countryName, this, (value) -> getStates())));
 
         cells.add(new CustomViewCell(stateField = new AutoCompleteTextEntry(
                 "State", "Select your state", user.getState(), this)));
