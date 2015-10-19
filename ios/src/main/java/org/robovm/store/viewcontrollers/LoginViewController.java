@@ -16,18 +16,15 @@
 package org.robovm.store.viewcontrollers;
 
 import org.robovm.apple.coregraphics.CGRect;
-import org.robovm.apple.foundation.NSNotificationCenter;
-import org.robovm.apple.foundation.NSObject;
 import org.robovm.apple.uikit.UIAlertView;
 import org.robovm.apple.uikit.UIAlertViewDelegateAdapter;
 import org.robovm.apple.uikit.UIBarButtonItem;
 import org.robovm.apple.uikit.UIBarButtonItemStyle;
-import org.robovm.apple.uikit.UIKeyboardAnimation;
 import org.robovm.apple.uikit.UIScrollView;
 import org.robovm.apple.uikit.UIView;
 import org.robovm.apple.uikit.UIViewController;
-import org.robovm.apple.uikit.UIWindow;
 import org.robovm.store.api.RoboVMWebService;
+import org.robovm.store.util.ProgressUI;
 import org.robovm.store.views.LoginView;
 import org.robovm.store.views.PrefillRoboVMAccountInstructionsView;
 
@@ -42,7 +39,7 @@ public class LoginViewController extends UIViewController {
     private LoginView loginView;
     private UIScrollView scrollView;
 
-    private double keyboardOffset = 0;
+    private final double keyboardOffset = 0;
 
     private Runnable loginSuccessListener;
 
@@ -86,65 +83,29 @@ public class LoginViewController extends UIViewController {
         }
     }
 
-    private NSObject keyboardWillShow;
-    private NSObject keyboardWillHide;
-
-    @Override
-    public void viewWillAppear(boolean animated) {
-        super.viewWillAppear(animated);
-        keyboardWillShow = UIWindow.Notifications.observeKeyboardWillShow(this::onKeyboardWillShow);
-        keyboardWillHide = UIWindow.Notifications.observeKeyboardWillHide(this::onKeyboardWillHide);
-    }
-
-    @Override
-    public void viewWillDisappear(boolean animated) {
-        super.viewWillDisappear(animated);
-        NSNotificationCenter.getDefaultCenter().removeObserver(keyboardWillShow);
-        NSNotificationCenter.getDefaultCenter().removeObserver(keyboardWillHide);
-    }
-
-    private void onKeyboardWillShow(UIKeyboardAnimation animation) {
-        onKeyboardNotification(animation, true);
-    }
-
-    private void onKeyboardWillHide(UIKeyboardAnimation animation) {
-        onKeyboardNotification(animation, false);
-    }
-
-    private void onKeyboardNotification(UIKeyboardAnimation animation, boolean show) {
-        if (isViewLoaded()) {
-            UIView.animate(animation.getAnimationDuration(), () -> {
-                UIView.setAnimationCurve(animation.getAnimationCurve());
-                CGRect frame = animation.getEndFrame();
-                keyboardOffset = show ? frame.getHeight() : 0;
-                viewDidLayoutSubviews();
-            });
-        }
-    }
-
     private void login(String username, String password) {
-//    BTProgressHUD.show("Logging in..."); TODO
+        ProgressUI.show("Logging in...", this);
 
         RoboVMWebService.getInstance().authenticate(username, password, (success) -> {
-//            BTProgressHUD.dismiss (); TODO
+            ProgressUI.hide();
 
-                if (success) {
-                    if (loginSuccessListener != null) {
-                        loginSuccessListener.run();
-                    }
-                } else {
-                    UIAlertView alert = new UIAlertView("Could not log in!",
-                            "Please verify your RoboVM account credentials and try again", null, "OK");
-                    alert.show();
-                    alert.setDelegate(new UIAlertViewDelegateAdapter() {
-                        @Override
-                        public void clicked(UIAlertView alertView, long buttonIndex) {
-                            loginView.getPasswordField().setSelected(true);
-                            loginView.getPasswordField().becomeFirstResponder();
-                        }
-                    });
+            if (success) {
+                if (loginSuccessListener != null) {
+                    loginSuccessListener.run();
                 }
-            });
+            } else {
+                UIAlertView alert = new UIAlertView("Could not log in!",
+                        "Please verify your RoboVM account credentials and try again", null, "OK");
+                alert.show();
+                alert.setDelegate(new UIAlertViewDelegateAdapter() {
+                    @Override
+                    public void clicked(UIAlertView alertView, long buttonIndex) {
+                        loginView.getPasswordField().setSelected(true);
+                        loginView.getPasswordField().becomeFirstResponder();
+                    }
+                });
+            }
+        });
     }
 
     public void setLoginSuccessListener(Runnable listener) {

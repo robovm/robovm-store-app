@@ -105,8 +105,12 @@ public class ProductDetailViewController extends UITableViewController {
 
         navigation.getView().addSubviews(backgroundView, imageView);
 
-        animateView(imageView, null);
-        animateView(backgroundView, () -> {
+        UIView targetView = (UIView) getNavigationItem().getRightBarButtonItem().getKeyValueCoder().getValue("view");
+        CGPoint targetPosition = new CGPoint(targetView.getCenter().getX() + targetView.getFrame().getWidth() / 3,
+                targetView.getCenter().getY() + targetView.getFrame().getHeight() / 2);
+
+        animateView(imageView, targetPosition, null);
+        animateView(backgroundView, targetPosition, () -> {
             getNavigationItem().setRightBarButtonItem(StoreApp.getInstance().createBasketButton());
         });
 
@@ -115,7 +119,7 @@ public class ProductDetailViewController extends UITableViewController {
         }
     }
 
-    private void animateView(UIView view, Runnable completion) {
+    private void animateView(UIView view, CGPoint targetPosition, Runnable completion) {
         CGSize size = view.getFrame().getSize();
         CGSize grow = new CGSize(size.getWidth() * 1.7, size.getHeight() * 1.7);
         CGSize shrink = new CGSize(size.getWidth() * .4, size.getHeight() * .4);
@@ -128,8 +132,8 @@ public class ProductDetailViewController extends UITableViewController {
 
         UIBezierPath path = new UIBezierPath();
         path.move(view.getCenter());
-        // TODO fix target position!!
-        path.addQuadCurve(new CGPoint(290, 34), new CGPoint(view.getCenter().getX(), view.getCenter().getY()));
+        path.addQuadCurve(targetPosition, new CGPoint(view.getCenter().getX(), view.getCenter()
+                .getY()));
         pathAnimation.setPath(path.getCGPath());
 
         CABasicAnimation growAnimation = new CABasicAnimation("bounds.size");
