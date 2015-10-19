@@ -32,7 +32,7 @@ public class LoginFragment extends Fragment {
     // TODO: Enter your RoboVM account email address here
     // If you do not have a RoboVM Account please sign up here:
     // https://account.robovm.com/#/register
-    private static final String ROBOVM_ACCOUNT_EMAIL = "";
+    private static final String ROBOVM_ACCOUNT_EMAIL = "dominik@robovm.com";
 
     private Runnable loginSuccessListener;
 

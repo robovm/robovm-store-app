@@ -32,7 +32,7 @@ public class RoboVMSpinnerView extends View {
     private float rotation, scaleX, scaleY;
 
     private Path hexagon, cross;
-    private Paint hexagonPaint, crossPaint;
+    private Paint hexagonPaint, iconPaint;
     private Matrix transformationMatrix;
 
     public RoboVMSpinnerView(Context context) {
@@ -112,7 +112,7 @@ public class RoboVMSpinnerView extends View {
 
         canvas.save();
         canvas.scale(.4f, .5f, getWidth() / 2, getHeight() / 2);
-        drawCross(canvas);
+        drawIcon(canvas);
         canvas.restore();
     }
 
@@ -147,14 +147,14 @@ public class RoboVMSpinnerView extends View {
 
         if (hexagonPaint == null) {
             hexagonPaint = new Paint();
-            hexagonPaint.setColor(Color.rgb(0x22, 0x76, 0xB9));
+            hexagonPaint.setColor(Color.rgb(0x93, 0xC6, 0x24));
             hexagonPaint.setAntiAlias(true);
             hexagonPaint.setPathEffect(new CornerPathEffect(30));
         }
         canvas.drawPath(path, hexagonPaint);
     }
 
-    private void drawCross(Canvas canvas) {
+    private void drawIcon(Canvas canvas) {
         int smallSegment = getWidth() / 6;
 
         Path path = cross == null ? cross = new Path() : cross;
@@ -165,21 +165,21 @@ public class RoboVMSpinnerView extends View {
         path.lineTo(getWidth() / 2, getHeight() / 2);
         path.lineTo(getWidth() - smallSegment, 0);
         path.rLineTo(smallSegment, 0);
-        path.lineTo(getWidth() / 2 + smallSegment, getHeight() / 2);
-        path.lineTo(getWidth(), getHeight());
-        path.rLineTo(-smallSegment, 0);
-        path.lineTo(getWidth() / 2, getHeight() / 2);
-        path.lineTo(smallSegment, getHeight());
-        path.rLineTo(-smallSegment, 0);
-        path.lineTo(getWidth() / 2 - smallSegment, getHeight() / 2);
+//        path.lineTo(getWidth() / 2 + smallSegment, getHeight() / 2);
+//        path.lineTo(getWidth(), getHeight());
+//        path.rLineTo(-smallSegment, 0);
+//        path.lineTo(getWidth() / 2, getHeight() / 2);
+//        path.lineTo(smallSegment, getHeight());
+//        path.rLineTo(-smallSegment, 0);
+//        path.lineTo(getWidth() / 2 - smallSegment, getHeight() / 2);
         path.close();
 
-        if (crossPaint == null) {
-            crossPaint = new Paint();
-            crossPaint.setAntiAlias(true);
-            crossPaint.setColor(Colors.White);
+        if (iconPaint == null) {
+            iconPaint = new Paint();
+            iconPaint.setAntiAlias(true);
+            iconPaint.setColor(Colors.White);
         }
 
-        canvas.drawPath(path, crossPaint);
+        canvas.drawPath(path, iconPaint);
     }
 }

@@ -20,6 +20,7 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -41,8 +42,8 @@ import java.util.List;
 public class ProductDetailsFragment extends Fragment implements ViewTreeObserver.OnGlobalLayoutListener {
     private Action<Order> addToBasketListener;
 
-    private  Product currentProduct;
-    private  Order order;
+    private Product currentProduct;
+    private Order order;
 
     private ImageView productImage;
     private int currentIndex;
@@ -57,7 +58,6 @@ public class ProductDetailsFragment extends Fragment implements ViewTreeObserver
     private KenBurnsDrawable productDrawable;
     private ValueAnimator kenBurnsMovement;
     private ValueAnimator kenBurnsAlpha;
-
 
     public ProductDetailsFragment() {}
 
@@ -139,7 +139,6 @@ public class ProductDetailsFragment extends Fragment implements ViewTreeObserver
         if (kenBurnsMovement != null) {
             kenBurnsMovement.cancel();
         }
-
     }
 
     @Override
@@ -179,51 +178,60 @@ public class ProductDetailsFragment extends Fragment implements ViewTreeObserver
 
         final int deltaX = 100;
 
-//        Bitmap img1 = Images.fromUrl(images.get(0));
-//        Bitmap img2 = Images.fromUrl(images.get(1));
-//
-//        productDrawable = new KenBurnsDrawable(Colors.DarkBlue);
-//        productDrawable.setFirstBitmap(img1);
-//        productDrawable.setSecondBitmap(img2);
-//        productImage.setImageDrawable(productDrawable);
-//        currentIndex++;
-//
-//        // Check for null bitmaps due to decode errors:
-//        if (productDrawable.getFirstBitmap() != null) {
-//            MatrixEvaluator evaluator = new MatrixEvaluator();
-//            Matrix finalMatrix = new Matrix();
-//            finalMatrix.setTranslate(-deltaX,
-//                    -(float) productDrawable.getFirstBitmap().getHeight() / 1.3f + (float) productImage.getHeight());
-//            finalMatrix.postScale(1.27f, 1.27f);
-//            kenBurnsMovement = ValueAnimator.ofObject(evaluator, new Matrix(), finalMatrix);
-//            kenBurnsMovement
-//                    .addUpdateListener((animator) -> productDrawable.setMatrix((Matrix) animator.getAnimatedValue()));
-//            kenBurnsMovement.setDuration(14000);
-//            kenBurnsMovement.setRepeatMode(ValueAnimator.REVERSE);
-//            kenBurnsMovement.setRepeatCount(ValueAnimator.INFINITE);
-//            kenBurnsMovement.start();
-//
-//            kenBurnsAlpha = ObjectAnimator.ofInt(productDrawable, "alpha", 0, 0, 0, 255, 255, 255);
-//            kenBurnsAlpha.setDuration(kenBurnsMovement.getDuration());
-//            kenBurnsAlpha.setRepeatMode(ValueAnimator.REVERSE);
-//            kenBurnsAlpha.setRepeatCount(ValueAnimator.INFINITE);
-//            kenBurnsAlpha.addListener(new Animator.AnimatorListener() {
-//                @Override
-//                public void onAnimationStart(Animator animation) {}
-//
-//                @Override
-//                public void onAnimationEnd(Animator animation) {}
-//
-//                @Override
-//                public void onAnimationCancel(Animator animation) {}
-//
-//                @Override
-//                public void onAnimationRepeat(Animator animation) {
-//                    nextImage();
-//                }
-//            });
-//            kenBurnsAlpha.start();
-//        } TODO
+        new Thread(() -> {
+            Bitmap img1 = Images.fromUrl(images.get(0));
+            Bitmap img2 = Images.fromUrl(images.get(1));
+
+            Activity activity = getActivity();
+            if (activity != null) {
+                activity.runOnUiThread(() -> {
+                    productDrawable = new KenBurnsDrawable(Colors.DarkBlue);
+                    productDrawable.setFirstBitmap(img1);
+                    productDrawable.setSecondBitmap(img2);
+                    productImage.setImageDrawable(productDrawable);
+                    currentIndex++;
+
+                    // Check for null bitmaps due to decode errors:
+                    if (productDrawable.getFirstBitmap() != null) {
+                        MatrixEvaluator evaluator = new MatrixEvaluator();
+                        Matrix finalMatrix = new Matrix();
+                        finalMatrix.setTranslate(-deltaX,
+                                -(float) productDrawable.getFirstBitmap().getHeight() / 1.3f + (float) productImage
+                                        .getHeight());
+                        finalMatrix.postScale(1.27f, 1.27f);
+                        kenBurnsMovement = ValueAnimator.ofObject(evaluator, new Matrix(), finalMatrix);
+                        kenBurnsMovement
+                                .addUpdateListener(
+                                        (animator) -> productDrawable.setMatrix((Matrix) animator.getAnimatedValue()));
+                        kenBurnsMovement.setDuration(14000);
+                        kenBurnsMovement.setRepeatMode(ValueAnimator.REVERSE);
+                        kenBurnsMovement.setRepeatCount(ValueAnimator.INFINITE);
+                        kenBurnsMovement.start();
+
+                        kenBurnsAlpha = ObjectAnimator.ofInt(productDrawable, "alpha", 0, 0, 0, 255, 255, 255);
+                        kenBurnsAlpha.setDuration(kenBurnsMovement.getDuration());
+                        kenBurnsAlpha.setRepeatMode(ValueAnimator.REVERSE);
+                        kenBurnsAlpha.setRepeatCount(ValueAnimator.INFINITE);
+                        kenBurnsAlpha.addListener(new Animator.AnimatorListener() {
+                            @Override
+                            public void onAnimationStart(Animator animation) {}
+
+                            @Override
+                            public void onAnimationEnd(Animator animation) {}
+
+                            @Override
+                            public void onAnimationCancel(Animator animation) {}
+
+                            @Override
+                            public void onAnimationRepeat(Animator animation) {
+                                nextImage();
+                            }
+                        });
+                        kenBurnsAlpha.start();
+                    }
+                });
+            }
+        }).start();
     }
 
     private void nextImage() {
@@ -242,7 +250,7 @@ public class ProductDetailsFragment extends Fragment implements ViewTreeObserver
         }
         int next = currentIndex + 1;
         String image = images.get(next);
-        ImageCache.getInstance().downloadImage(image);
+        ImageCache.getInstance().downloadImage(image, (f) -> {});
     }
 
     public void setAddToBasketListener(Action<Order> listener) {

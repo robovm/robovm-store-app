@@ -36,9 +36,7 @@ public class BragFragment extends Fragment {
     public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.brag_screen, null);
         Button btn = (Button) view.findViewById(R.id.bragButton);
-        btn.setOnClickListener((v) -> {
-            bragOnTwitter();
-        });
+        btn.setOnClickListener((v) -> bragOnTwitter());
 
         return view;
     }
@@ -48,6 +46,7 @@ public class BragFragment extends Fragment {
 
         try {
             Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
             intent.putExtra(Intent.EXTRA_TEXT, message);
             startActivity(Intent.createChooser(intent, getResources().getString(R.string.brag_on)));
         } catch (Exception e) {

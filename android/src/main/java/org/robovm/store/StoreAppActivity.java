@@ -21,7 +21,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import org.robovm.store.api.RoboVMWebService;
@@ -29,6 +28,7 @@ import org.robovm.store.fragments.*;
 import org.robovm.store.model.Product;
 import org.robovm.store.util.Action;
 import org.robovm.store.util.ImageCache;
+import org.robovm.store.util.Images;
 
 public class StoreAppActivity extends Activity {
     private int baseFragment;
@@ -37,7 +37,7 @@ public class StoreAppActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        //        Images.setScreenWidth(metrics.widthPixels); TODO ???
+        Images.setScreenWidth(metrics.widthPixels);
         ImageCache.getInstance().setSaveLocation(getCacheDir().getAbsolutePath());
 
         super.onCreate(savedInstanceState);
@@ -47,7 +47,7 @@ public class StoreAppActivity extends Activity {
             public <T> void invoke(Action<T> action, T result) {
                 runOnUiThread(() -> action.invoke(result));
             }
-        }); // TODO use release
+        }); // TODO remove test mode
 
         setContentView(R.layout.main);
 

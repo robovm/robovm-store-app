@@ -26,6 +26,7 @@ import java.util.concurrent.ConcurrentMap;
 
 public class Images {
     private static final ConcurrentMap<String, Bitmap> bmpCache = new ConcurrentHashMap<>();
+    private static float SCREEN_WIDTH = 320;
 
     public static void setImageFromUrlAsync(ImageView imageView, String url) {
         fromUrl(url, imageView::setImageBitmap);
@@ -77,7 +78,22 @@ public class Images {
 
     private static Bitmap saveBitmap(String url, File imagePath) {
         Bitmap bmp = BitmapFactory.decodeFile(imagePath.getAbsolutePath());
+        // We resize all bitmaps to screen width.
+        bmp = resizeBitmap(bmp, SCREEN_WIDTH);
+
         bmpCache.put(url, bmp);
         return bmp;
+    }
+
+    private static Bitmap resizeBitmap(Bitmap bitmap, float maxImageSize) {
+        float ratio = Math.min(maxImageSize / bitmap.getWidth(), maxImageSize / bitmap.getHeight());
+        int width = Math.round(ratio * bitmap.getWidth());
+        int height = Math.round(ratio * bitmap.getHeight());
+
+        return Bitmap.createScaledBitmap(bitmap, width, height, true);
+    }
+
+    public static void setScreenWidth(float screenWidth) {
+        SCREEN_WIDTH = screenWidth;
     }
 }

@@ -66,7 +66,7 @@ public class BadgeDrawable extends Drawable {
         alphaAnimator = ObjectAnimator.ofInt(this, "alpha", 0xFF, 0);
         alphaAnimator.setDuration(duration);
         alphaAnimator.setRepeatMode(ValueAnimator.REVERSE);
-        alphaAnimator.setRepeatMode(1);
+        alphaAnimator.setRepeatCount(1);
         alphaAnimator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {}

@@ -93,7 +93,9 @@ public class ProductListFragment extends ListFragment {
             basketBadge.setCount(basket.size());
         }
         badgeCount = basket.size();
-        basket.addOnBasketChangeListener(() -> basketBadge.setCountAnimated(basket.size()));
+        basket.addOnBasketChangeListener(() -> {
+            basketBadge.setCountAnimated(basket.size());
+        });
 
         super.onCreateOptionsMenu(menu, inflater);
     }
