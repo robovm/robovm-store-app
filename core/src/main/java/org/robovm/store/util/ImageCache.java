@@ -15,19 +15,17 @@
  */
 package org.robovm.store.util;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Objects;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-import org.robovm.store.api.RoboVMWebService;
-
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.robovm.store.api.RoboVMWebService;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class ImageCache {
     private static final String PLACEHOLDER_URL = "http://store-app-images.robovm.com/placeholder.jpg";

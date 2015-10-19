@@ -21,6 +21,7 @@ import org.robovm.store.model.Product;
 import org.robovm.store.model.User;
 import org.robovm.store.util.Action;
 import org.robovm.store.util.ImageCache;
+import org.robovm.store.util.Objects;
 import retrofit.*;
 import retrofit.http.Body;
 import retrofit.http.GET;
@@ -28,7 +29,6 @@ import retrofit.http.POST;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class RoboVMWebService {
     private static final RoboVMWebService instance = new RoboVMWebService();
@@ -166,13 +166,15 @@ public class RoboVMWebService {
     }
 
     public void preloadProductImages() {
-        new Thread(() -> {
-            for (Product product : products) {
-                for (String url : product.getImageUrls()) {
-                    ImageCache.getInstance().downloadImage(url);
+        if (products != null) {
+            new Thread(() -> {
+                for (Product product : products) {
+                    for (String url : product.getImageUrls()) {
+                        ImageCache.getInstance().downloadImage(url);
+                    }
                 }
-            }
-        }).start();
+            }).start();
+        }
     }
 
     public boolean isAuthenticated() {

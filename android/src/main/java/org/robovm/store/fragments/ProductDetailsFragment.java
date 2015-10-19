@@ -179,51 +179,51 @@ public class ProductDetailsFragment extends Fragment implements ViewTreeObserver
 
         final int deltaX = 100;
 
-        Bitmap img1 = Images.fromUrl(images.get(0));
-        Bitmap img2 = Images.fromUrl(images.get(1));
-
-        productDrawable = new KenBurnsDrawable(Colors.DarkBlue);
-        productDrawable.setFirstBitmap(img1);
-        productDrawable.setSecondBitmap(img2);
-        productImage.setImageDrawable(productDrawable);
-        currentIndex++;
-
-        // Check for null bitmaps due to decode errors:
-        if (productDrawable.getFirstBitmap() != null) {
-            MatrixEvaluator evaluator = new MatrixEvaluator();
-            Matrix finalMatrix = new Matrix();
-            finalMatrix.setTranslate(-deltaX,
-                    -(float) productDrawable.getFirstBitmap().getHeight() / 1.3f + (float) productImage.getHeight());
-            finalMatrix.postScale(1.27f, 1.27f);
-            kenBurnsMovement = ValueAnimator.ofObject(evaluator, new Matrix(), finalMatrix);
-            kenBurnsMovement
-                    .addUpdateListener((animator) -> productDrawable.setMatrix((Matrix) animator.getAnimatedValue()));
-            kenBurnsMovement.setDuration(14000);
-            kenBurnsMovement.setRepeatMode(ValueAnimator.REVERSE);
-            kenBurnsMovement.setRepeatCount(ValueAnimator.INFINITE);
-            kenBurnsMovement.start();
-
-            kenBurnsAlpha = ObjectAnimator.ofInt(productDrawable, "alpha", 0, 0, 0, 255, 255, 255);
-            kenBurnsAlpha.setDuration(kenBurnsMovement.getDuration());
-            kenBurnsAlpha.setRepeatMode(ValueAnimator.REVERSE);
-            kenBurnsAlpha.setRepeatCount(ValueAnimator.INFINITE);
-            kenBurnsAlpha.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animation) {}
-
-                @Override
-                public void onAnimationEnd(Animator animation) {}
-
-                @Override
-                public void onAnimationCancel(Animator animation) {}
-
-                @Override
-                public void onAnimationRepeat(Animator animation) {
-                    nextImage();
-                }
-            });
-            kenBurnsAlpha.start();
-        }
+//        Bitmap img1 = Images.fromUrl(images.get(0));
+//        Bitmap img2 = Images.fromUrl(images.get(1));
+//
+//        productDrawable = new KenBurnsDrawable(Colors.DarkBlue);
+//        productDrawable.setFirstBitmap(img1);
+//        productDrawable.setSecondBitmap(img2);
+//        productImage.setImageDrawable(productDrawable);
+//        currentIndex++;
+//
+//        // Check for null bitmaps due to decode errors:
+//        if (productDrawable.getFirstBitmap() != null) {
+//            MatrixEvaluator evaluator = new MatrixEvaluator();
+//            Matrix finalMatrix = new Matrix();
+//            finalMatrix.setTranslate(-deltaX,
+//                    -(float) productDrawable.getFirstBitmap().getHeight() / 1.3f + (float) productImage.getHeight());
+//            finalMatrix.postScale(1.27f, 1.27f);
+//            kenBurnsMovement = ValueAnimator.ofObject(evaluator, new Matrix(), finalMatrix);
+//            kenBurnsMovement
+//                    .addUpdateListener((animator) -> productDrawable.setMatrix((Matrix) animator.getAnimatedValue()));
+//            kenBurnsMovement.setDuration(14000);
+//            kenBurnsMovement.setRepeatMode(ValueAnimator.REVERSE);
+//            kenBurnsMovement.setRepeatCount(ValueAnimator.INFINITE);
+//            kenBurnsMovement.start();
+//
+//            kenBurnsAlpha = ObjectAnimator.ofInt(productDrawable, "alpha", 0, 0, 0, 255, 255, 255);
+//            kenBurnsAlpha.setDuration(kenBurnsMovement.getDuration());
+//            kenBurnsAlpha.setRepeatMode(ValueAnimator.REVERSE);
+//            kenBurnsAlpha.setRepeatCount(ValueAnimator.INFINITE);
+//            kenBurnsAlpha.addListener(new Animator.AnimatorListener() {
+//                @Override
+//                public void onAnimationStart(Animator animation) {}
+//
+//                @Override
+//                public void onAnimationEnd(Animator animation) {}
+//
+//                @Override
+//                public void onAnimationCancel(Animator animation) {}
+//
+//                @Override
+//                public void onAnimationRepeat(Animator animation) {
+//                    nextImage();
+//                }
+//            });
+//            kenBurnsAlpha.start();
+//        } TODO
     }
 
     private void nextImage() {

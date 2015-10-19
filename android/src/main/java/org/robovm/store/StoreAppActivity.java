@@ -27,20 +27,27 @@ import android.view.MenuItem;
 import org.robovm.store.api.RoboVMWebService;
 import org.robovm.store.fragments.*;
 import org.robovm.store.model.Product;
+import org.robovm.store.util.Action;
 import org.robovm.store.util.ImageCache;
 
 public class StoreAppActivity extends Activity {
     private int baseFragment;
 
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+    protected void onCreate(Bundle savedInstanceState) {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         //        Images.setScreenWidth(metrics.widthPixels); TODO ???
         ImageCache.getInstance().setSaveLocation(getCacheDir().getAbsolutePath());
-        super.onCreate(savedInstanceState, persistentState);
 
-        RoboVMWebService.getInstance().setup(true); // TODO use release
+        super.onCreate(savedInstanceState);
+
+        RoboVMWebService.getInstance().setup(true).setActionWrapper(new RoboVMWebService.ActionWrapper() {
+            @Override
+            public <T> void invoke(Action<T> action, T result) {
+                runOnUiThread(() -> action.invoke(result));
+            }
+        }); // TODO use release
 
         setContentView(R.layout.main);
 

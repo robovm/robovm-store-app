@@ -50,7 +50,7 @@ public class LoginFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (ROBOVM_ACCOUNT_EMAIL != null && !ROBOVM_ACCOUNT_EMAIL.isEmpty()) {
+        if (ROBOVM_ACCOUNT_EMAIL == null || ROBOVM_ACCOUNT_EMAIL.isEmpty()) {
             return createInstructions(inflater, container, savedInstanceState);
         }
         return createLoginView(inflater, container, savedInstanceState);

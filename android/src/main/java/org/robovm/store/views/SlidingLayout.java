@@ -72,22 +72,22 @@ public class SlidingLayout extends LinearLayout {
 
     @Override
     public float getTranslationY() {
-        return primaryView.getTranslationY() / initialMainViewDelta;
+        return getPrimaryView().getTranslationY() / initialMainViewDelta;
     }
 
     @Override
     public void setTranslationY(float translationY) {
-        primaryView.setTranslationY(translationY * initialMainViewDelta);
+        getPrimaryView().setTranslationY(translationY * initialMainViewDelta);
     }
 
     @Override
     public float getAlpha() {
-        return secondaryView.getAlpha();
+        return getSecondaryView().getAlpha();
     }
 
     @Override
     public void setAlpha(float alpha) {
-        secondaryView.setAlpha(alpha);
+        getSecondaryView().setAlpha(alpha);
     }
 
     @Override
