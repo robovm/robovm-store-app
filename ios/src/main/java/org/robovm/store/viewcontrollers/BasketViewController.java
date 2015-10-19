@@ -17,7 +17,6 @@ package org.robovm.store.viewcontrollers;
 
 import java.io.File;
 import java.text.NumberFormat;
-import java.util.List;
 
 import org.robovm.apple.coregraphics.CGPoint;
 import org.robovm.apple.coregraphics.CGRect;

@@ -29,8 +29,6 @@ import org.robovm.apple.social.SLServiceType;
 import org.robovm.apple.uikit.NSLineBreakMode;
 import org.robovm.apple.uikit.NSTextAlignment;
 import org.robovm.apple.uikit.UIAlertView;
-import org.robovm.apple.uikit.UIBarButtonItem;
-import org.robovm.apple.uikit.UIBarButtonSystemItem;
 import org.robovm.apple.uikit.UIBarStyle;
 import org.robovm.apple.uikit.UIFont;
 import org.robovm.apple.uikit.UIImage;
@@ -59,9 +57,7 @@ public class ProcessingViewController extends UIViewController {
         this.user = user;
 
         setTitle("Processing");
-
-        getNavigationItem().setRightBarButtonItem(
-                new UIBarButtonItem(UIBarButtonSystemItem.Cancel, (b) -> dismissViewController(true, null)));
+        getNavigationItem().setHidesBackButton(true);
     }
 
     @Override
