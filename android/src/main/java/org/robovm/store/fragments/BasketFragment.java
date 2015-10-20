@@ -35,7 +35,7 @@ public class BasketFragment extends ListFragment {
     private Basket basket;
     private Button checkoutButton;
 
-    private Runnable checkoutClickedListener;
+    private Runnable checkoutListener;
 
     public BasketFragment() {}
 
@@ -55,8 +55,8 @@ public class BasketFragment extends ListFragment {
 
         checkoutButton = (Button) shoppingCartView.findViewById(R.id.checkoutBtn);
         checkoutButton.setOnClickListener((b) -> {
-            if (checkoutClickedListener != null) {
-                checkoutClickedListener.run();
+            if (checkoutListener != null) {
+                checkoutListener.run();
             }
         });
         shoppingCartView.setPivotY(0);
@@ -152,6 +152,6 @@ public class BasketFragment extends ListFragment {
     }
 
     public void setCheckoutListener(Runnable checkoutClickedListener) {
-        this.checkoutClickedListener = checkoutClickedListener;
+        this.checkoutListener = checkoutClickedListener;
     }
 }

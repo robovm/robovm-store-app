@@ -60,7 +60,7 @@ public class LoginFragment extends Fragment {
         View view = inflater.inflate(R.layout.prefill_robovm_account_instructions, null);
         TextView textView = (TextView) view.findViewById(R.id.codeTextView);
         Spanned coloredText = Html.fromHtml(
-                "<font color='#48D1CC'>public static</font> <font color='#1E90FF'>String</font> ROBOVM_ACCOUNT_EMAIL = <font color='Red'>\"...\"</font>;");
+                "<font color='#48D1CC'>static</font> <font color='#1E90FF'>String</font> ROBOVM_ACCOUNT_EMAIL = <font color='Red'>\"...\"</font>;");
         textView.setText(coloredText, TextView.BufferType.SPANNABLE);
 
         return view;
