@@ -18,6 +18,7 @@ package org.robovm.store.views;
 import org.robovm.apple.coregraphics.CGPoint;
 import org.robovm.apple.coregraphics.CGRect;
 import org.robovm.apple.coregraphics.CGSize;
+import org.robovm.apple.foundation.NSData;
 import org.robovm.apple.foundation.NSString;
 import org.robovm.apple.uikit.NSAttributedStringAttributes;
 import org.robovm.apple.uikit.NSLayoutAttribute;
@@ -33,6 +34,7 @@ import org.robovm.apple.uikit.UITextFieldDelegateAdapter;
 import org.robovm.apple.uikit.UIView;
 import org.robovm.store.util.Action;
 import org.robovm.store.util.Colors;
+import org.robovm.store.util.Gravatar;
 
 public class LoginView extends UIView {
     private static final CGSize GRAVATAR_SIZE = new CGSize(85, 85);
@@ -112,15 +114,12 @@ public class LoginView extends UIView {
     }
 
     private void displayGravatar(String email) {
-//        NSData data;
-//
-//        try {
-//            data = Gravatar.getImageData(email, GRAVATAR_SIZE.getWidth() * 2);
-//        } catch (Exception e) {
-//            return;
-//        }
-        // TODO
-//        gravatarView.setImage(new UIImage(data));
+        Gravatar.getInstance().getImageBytes(email, (int) (GRAVATAR_SIZE.getWidth() * 2), Gravatar.Rating.PG,
+                (bytes) -> {
+                    if (bytes != null) {
+                        gravatarView.setImage(new UIImage(new NSData(bytes)));
+                    }
+                });
     }
 
     private void addConstantSizeConstraints(UIView view, CGSize size) {

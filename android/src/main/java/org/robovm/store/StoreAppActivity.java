@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import org.robovm.store.api.RoboVMWebService;
+import org.robovm.store.api.RoboVMWebService.ActionWrapper;
 import org.robovm.store.fragments.*;
 import org.robovm.store.model.Product;
 import org.robovm.store.util.Action;
@@ -42,12 +43,13 @@ public class StoreAppActivity extends Activity {
 
         super.onCreate(savedInstanceState);
 
-        RoboVMWebService.getInstance().setup(true).setActionWrapper(new RoboVMWebService.ActionWrapper() {
+        RoboVMWebService.getInstance().setup(true);// TODO remove test mode
+        ActionWrapper.WRAPPER = new RoboVMWebService.ActionWrapper() {
             @Override
             public <T> void invoke(Action<T> action, T result) {
                 runOnUiThread(() -> action.invoke(result));
             }
-        }); // TODO remove test mode
+        };
 
         setContentView(R.layout.main);
 

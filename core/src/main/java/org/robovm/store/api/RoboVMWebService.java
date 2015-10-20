@@ -15,20 +15,24 @@
  */
 package org.robovm.store.api;
 
-import org.robovm.store.api.RoboVMWebService.ActionWrapper.ActionWrapperImpl;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.robovm.store.model.Basket;
 import org.robovm.store.model.Product;
 import org.robovm.store.model.User;
 import org.robovm.store.util.Action;
 import org.robovm.store.util.ImageCache;
 import org.robovm.store.util.Objects;
-import retrofit.*;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.GsonConverterFactory;
+import retrofit.Response;
+import retrofit.Retrofit;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class RoboVMWebService {
     private static final RoboVMWebService instance = new RoboVMWebService();
@@ -48,8 +52,6 @@ public class RoboVMWebService {
     private User currentUser;
     private List<Product> products;
     private final Basket basket = new Basket();
-
-    private ActionWrapper invokation = new ActionWrapperImpl();
 
     public RoboVMWebService setup() {
         return setup(false);
@@ -77,7 +79,7 @@ public class RoboVMWebService {
             if (currentUser == null) {
                 currentUser = new User();
             }
-            invokation.invoke(completion, true);
+            ActionWrapper.WRAPPER.invoke(completion, true);
         } else {
             api.auth(new AuthRequest(username, password)).enqueue(new Callback<AuthResponse>() {
                 @Override
@@ -90,19 +92,19 @@ public class RoboVMWebService {
                             authToken = new AuthToken(body.getAuthToken(), () -> {
                                 // Token timed out.
                                 // TODO token timed out
-                            });
+                                });
                         }
                     }
                     if (success) {
                         currentUser = new User();
                     }
-                    invokation.invoke(completion, success);
+                    ActionWrapper.WRAPPER.invoke(completion, success);
                 }
 
                 @Override
                 public void onFailure(Throwable t) {
                     t.printStackTrace();
-                    invokation.invoke(completion, false);
+                    ActionWrapper.WRAPPER.invoke(completion, false);
                 }
             });
         }
@@ -112,7 +114,7 @@ public class RoboVMWebService {
         Objects.requireNonNull(completion);
 
         if (products != null) {
-            invokation.invoke(completion, products);
+            ActionWrapper.WRAPPER.invoke(completion, products);
         } else {
             api.products().enqueue(new Callback<ProductsResponse>() {
                 @Override
@@ -130,14 +132,14 @@ public class RoboVMWebService {
                         // Return empty list in case of failure.
                         products = new ArrayList<>();
                     }
-                    invokation.invoke(completion, products);
+                    ActionWrapper.WRAPPER.invoke(completion, products);
                 }
 
                 @Override
                 public void onFailure(Throwable t) {
                     t.printStackTrace();
 
-                    invokation.invoke(completion, new ArrayList<>());
+                    ActionWrapper.WRAPPER.invoke(completion, new ArrayList<>());
                 }
             });
         }
@@ -151,16 +153,16 @@ public class RoboVMWebService {
             @Override
             public void onResponse(Response<APIResponse> response, Retrofit retrofit) {
                 if (response.isSuccess()) {
-                    invokation.invoke(completion, response.body());
+                    ActionWrapper.WRAPPER.invoke(completion, response.body());
                 } else {
-                    invokation.invoke(completion, null);
+                    ActionWrapper.WRAPPER.invoke(completion, null);
                 }
             }
 
             @Override
             public void onFailure(Throwable t) {
                 t.printStackTrace();
-                invokation.invoke(completion, null);
+                ActionWrapper.WRAPPER.invoke(completion, null);
             }
         });
     }
@@ -193,14 +195,6 @@ public class RoboVMWebService {
         return api;
     }
 
-    public void setActionWrapper(ActionWrapper wrapper) {
-        this.invokation = wrapper;
-    }
-
-    public ActionWrapper getActionWrapper() {
-        return invokation;
-    }
-
     public interface RoboVMAPI {
         @POST("auth")
         Call<AuthResponse> auth(@Body AuthRequest body);
@@ -212,14 +206,14 @@ public class RoboVMWebService {
         Call<APIResponse> order(@Body OrderRequest body);
     }
 
-    public interface ActionWrapper {
-        <T> void invoke(Action<T> action, T result);
-
-        class ActionWrapperImpl implements ActionWrapper {
+    public static abstract class ActionWrapper {
+        public static ActionWrapper WRAPPER = new ActionWrapper() {
             @Override
             public <T> void invoke(Action<T> action, T result) {
                 action.invoke(result);
             }
-        }
+        };
+
+        public abstract <T> void invoke(Action<T> action, T result);
     }
 }

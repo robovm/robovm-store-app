@@ -18,15 +18,20 @@ package org.robovm.store.fragments;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import org.robovm.store.R;
 import org.robovm.store.api.RoboVMWebService;
+import org.robovm.store.util.Gravatar;
+import org.robovm.store.views.CircleDrawable;
 
 public class LoginFragment extends Fragment {
     // TODO: Enter your RoboVM account email address here
@@ -86,7 +91,14 @@ public class LoginFragment extends Fragment {
     }
 
     private void loadUserImage() {
-        // TODO gravatar
+        int px = (int) TypedValue
+                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 85, getActivity().getResources().getDisplayMetrics());
+        Gravatar.getInstance().getImageBytes(ROBOVM_ACCOUNT_EMAIL, px, Gravatar.Rating.PG, (bytes) -> {
+            if (bytes != null) {
+                Bitmap image = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                imageView.setImageDrawable(new CircleDrawable(image));
+            }
+        });
     }
 
     public void setLoginSuccessListener(Runnable loginSuccessListener) {

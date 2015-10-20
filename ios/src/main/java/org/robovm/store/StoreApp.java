@@ -67,15 +67,16 @@ public class StoreApp extends UIApplicationDelegateAdapter {
         instance = this;
 
         ImageCache.getInstance().setSaveLocation(NSPathUtilities.getHomeDirectory() + "/Documents/");
-        RoboVMWebService.getInstance().setup(true).setActionWrapper(new ActionWrapper() {
+        RoboVMWebService.getInstance().setup(true); // TODO setup api service
+                                                    // without test
+        ActionWrapper.WRAPPER = new ActionWrapper() {
             @Override
             public <T> void invoke(Action<T> action, T result) {
                 NSOperationQueue.getMainQueue().addOperation(() -> {
                     action.invoke(result);
                 });
             }
-        });
-        // TODO setup api service without test
+        };
 
         UIApplication.getSharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, false);
 
