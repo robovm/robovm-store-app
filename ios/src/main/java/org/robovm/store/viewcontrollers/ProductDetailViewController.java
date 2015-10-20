@@ -30,14 +30,15 @@ import org.robovm.apple.coreanimation.CAKeyframeAnimation;
 import org.robovm.apple.coregraphics.CGPoint;
 import org.robovm.apple.coregraphics.CGRect;
 import org.robovm.apple.coregraphics.CGSize;
-import org.robovm.apple.dispatch.DispatchQueue;
 import org.robovm.apple.foundation.NSArray;
 import org.robovm.apple.foundation.NSIndexPath;
+import org.robovm.apple.foundation.NSOperationQueue;
 import org.robovm.apple.foundation.NSValue;
 import org.robovm.apple.uikit.UIBezierPath;
 import org.robovm.apple.uikit.UIImage;
 import org.robovm.apple.uikit.UIImageView;
 import org.robovm.apple.uikit.UINavigationController;
+import org.robovm.apple.uikit.UIScreen;
 import org.robovm.apple.uikit.UITableView;
 import org.robovm.apple.uikit.UITableViewCell;
 import org.robovm.apple.uikit.UITableViewController;
@@ -68,7 +69,7 @@ public class ProductDetailViewController extends UITableViewController {
     private final BottomButtonView bottomView;
     private StringSelectionCell colorCell, sizeCell;
     private JBKenBurnsView imageView;
-    private UIImage tshirtIcon;
+    private final UIImage tshirtIcon;
 
     private List<ProductColor> colorOptions;
     private List<ProductSize> sizeOptions;
@@ -83,9 +84,10 @@ public class ProductDetailViewController extends UITableViewController {
 
         getTableView().setTableFooterView(new UIView(new CGRect(0, 0, 0, BottomButtonView.HEIGHT)));
 
+        tshirtIcon = UIImage.getImage("t-shirt");
+
         bottomView = new BottomButtonView();
         bottomView.setButtonText("Add to Basket");
-        bottomView.setButtonImage(tshirtIcon = UIImage.getImage("t-shirt"));
         bottomView.setButtonTapListener((b, e) -> addToBasket());
 
         getView().addSubview(bottomView);
@@ -185,7 +187,7 @@ public class ProductDetailViewController extends UITableViewController {
             }
         }
 
-        imageView = new JBKenBurnsView(new CGRect(0, -60, 320, 400));
+        imageView = new JBKenBurnsView(new CGRect(0, -60, UIScreen.getMainScreen().getBounds().getWidth(), 400));
         imageView.setImages(images);
         imageView.setUserInteractionEnabled(false);
 
@@ -209,7 +211,7 @@ public class ProductDetailViewController extends UITableViewController {
                     images.add(new UIImage(path));
                 }
             }
-            DispatchQueue.getMainQueue().sync(() -> {
+            NSOperationQueue.getMainQueue().addOperation(() -> {
                 imageView.setImages(images);
                 completed.run();
             });
@@ -224,6 +226,8 @@ public class ProductDetailViewController extends UITableViewController {
                 .getY() + imageView.getFrame().getHeight()));
         headerView.addSubview(imageView);
         getTableView().setTableHeaderView(headerView);
+
+        imageView.animate();
 
         List<UITableViewCell> tableItems = new ArrayList<>();
         tableItems.add(new CustomViewCell(productDescriptionView));

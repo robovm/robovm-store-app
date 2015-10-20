@@ -25,13 +25,18 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.robovm.store.api.RoboVMWebService.RoboVMAPI;
-import org.robovm.store.model.*;
+import org.robovm.store.model.Basket;
+import org.robovm.store.model.Order;
+import org.robovm.store.model.Product;
+import org.robovm.store.model.ProductColor;
+import org.robovm.store.model.ProductSize;
+import org.robovm.store.model.ProductType;
+import org.robovm.store.model.User;
 
 import retrofit.Call;
 import retrofit.Response;

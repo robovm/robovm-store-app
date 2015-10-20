@@ -29,6 +29,7 @@ import org.robovm.apple.uikit.UIFont;
 import org.robovm.apple.uikit.UIImage;
 import org.robovm.apple.uikit.UIImageView;
 import org.robovm.apple.uikit.UILabel;
+import org.robovm.apple.uikit.UIScreen;
 import org.robovm.apple.uikit.UITableView;
 import org.robovm.apple.uikit.UITableViewCell;
 import org.robovm.apple.uikit.UITableViewCellEditingStyle;
@@ -267,7 +268,8 @@ public class BasketViewController extends UITableViewController {
 
                 colorLabel.setFrame(new CGRect(x, y, labelWidth, colorLabel.getFrame().getHeight()));
                 y = colorLabel.getFrame().getY() + colorLabel.getFrame().getHeight() + TOP_PADDING;
-                lineView.setFrame(new CGRect(0, bounds.getHeight() - .5, bounds.getWidth(), .5));
+                lineView.setFrame(new CGRect(0, bounds.getHeight() - .5, UIScreen.getMainScreen().getBounds()
+                        .getWidth(), .5));
             }
 
             public void update(Order order) {

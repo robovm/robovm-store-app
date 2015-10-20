@@ -134,10 +134,10 @@ public class JBKenBurnsView extends UIView {
         double frameWidth = isLandscape ? bounds.getWidth() : bounds.getHeight();
         double frameHeight = isLandscape ? bounds.getHeight() : bounds.getWidth();
 
-        // Wider than screen
         double imageWidth = image.getSize().getWidth() == 0 ? 100 : image.getSize().getWidth();
         double imageHeight = image.getSize().getHeight() == 0 ? 100 : image.getSize().getHeight();
 
+        // Wider than screen
         if (imageWidth > frameWidth) {
             widthDiff = imageWidth - frameWidth;
 
@@ -157,7 +157,7 @@ public class JBKenBurnsView extends UIView {
                 if (widthDiff > heightDiff)
                     resizeRatio = frameWidth / imageWidth;
                 else
-                    resizeRatio = bounds.getHeight() / imageHeight;
+                    resizeRatio = frameHeight / imageHeight;
             }
             // No wider than screen
         } else {
@@ -208,8 +208,7 @@ public class JBKenBurnsView extends UIView {
             break;
         case 1:
             originX = 0;
-            originY = 0;// Math.max(frameHeight - (optimusHeight),frameHeight *
-                        // 1/3);
+            originY = 0;
             zoomInX = 1.1f;
             zoomInY = 1.1f;
             moveX = -maxMoveX;
@@ -225,8 +224,7 @@ public class JBKenBurnsView extends UIView {
             break;
         default:
             originX = frameWidth - optimusWidth;
-            originY = 0;// Math.max(frameHeight - optimusHeight,frameHeight *
-                        // 1/3);
+            originY = 0;
             zoomInX = 1.2f;
             zoomInY = 1.2f;
             moveX = maxMoveX;
@@ -256,9 +254,7 @@ public class JBKenBurnsView extends UIView {
         final double sx = zoomInX, sy = zoomInY;
 
         animate(imageDuration + 2, 0, UIViewAnimationOptions.CurveEaseIn, () -> {
-            CGAffineTransform t = CGAffineTransform.createRotation(rotation);
-            t.translate(tx, ty);
-            t.scale(sx, sy);
+            CGAffineTransform t = CGAffineTransform.createRotation(rotation).translate(tx, ty).scale(sx, sy);
             imageView.setTransform(t);
         }, null);
 
