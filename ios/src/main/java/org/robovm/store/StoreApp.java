@@ -16,7 +16,9 @@
 package org.robovm.store;
 
 import org.robovm.apple.coregraphics.CGRect;
+import org.robovm.apple.foundation.NSArray;
 import org.robovm.apple.foundation.NSAutoreleasePool;
+import org.robovm.apple.foundation.NSMutableArray;
 import org.robovm.apple.foundation.NSOperationQueue;
 import org.robovm.apple.foundation.NSPathUtilities;
 import org.robovm.apple.uikit.NSAttributedStringAttributes;
@@ -28,8 +30,10 @@ import org.robovm.apple.uikit.UIBarButtonItem;
 import org.robovm.apple.uikit.UIColor;
 import org.robovm.apple.uikit.UINavigationBar;
 import org.robovm.apple.uikit.UINavigationController;
+import org.robovm.apple.uikit.UINavigationControllerDelegateAdapter;
 import org.robovm.apple.uikit.UIScreen;
 import org.robovm.apple.uikit.UIStatusBarStyle;
+import org.robovm.apple.uikit.UIViewController;
 import org.robovm.apple.uikit.UIWindow;
 import org.robovm.store.api.RoboVMWebService;
 import org.robovm.store.api.RoboVMWebService.ActionWrapper;
@@ -85,6 +89,25 @@ public class StoreApp extends UIApplicationDelegateAdapter {
 
         navigation.getNavigationBar().setTintColor(Colors.White);
         navigation.getNavigationBar().setBarTintColor(Colors.Green);
+
+        navigation.setDelegate(new UINavigationControllerDelegateAdapter() {
+            @Override
+            public void didShowViewController(UINavigationController navigationController,
+                    UIViewController viewController, boolean animated) {
+
+                // Remove the LoginViewController from the stack, if we are
+                // already logged in.
+                if (viewController instanceof ShippingAddressViewController) {
+                    NSArray<UIViewController> vcs = navigationController.getViewControllers();
+                    if (RoboVMWebService.getInstance().isAuthenticated()
+                            && vcs.get(vcs.size() - 2) instanceof LoginViewController) {
+                        NSMutableArray<UIViewController> array = new NSMutableArray<>(vcs);
+                        array.remove(vcs.size() - 2);
+                        navigationController.setViewControllers(array, false);
+                    }
+                }
+            }
+        });
 
         window.setRootViewController(navigation);
         window.makeKeyAndVisible();
