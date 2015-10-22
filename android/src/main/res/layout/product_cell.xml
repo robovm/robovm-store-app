@@ -19,7 +19,7 @@
             android:layout_gravity="left|bottom"
             android:layout_marginBottom="12dp">
         <TextView
-                android:text="Men's C# t-shirt"
+                android:text="Men's Java t-shirt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView1"
