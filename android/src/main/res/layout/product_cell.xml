@@ -4,7 +4,7 @@
              android:layout_width="fill_parent"
              android:layout_height="200dp">
     <ImageView
-            android:src="@drawable/blue_shirt"
+            android:src="@drawable/product_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/productImage"
