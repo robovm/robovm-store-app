@@ -78,10 +78,12 @@ public class Images {
 
     private static Bitmap saveBitmap(String url, File imagePath) {
         Bitmap bmp = BitmapFactory.decodeFile(imagePath.getAbsolutePath());
-        // We resize all bitmaps to screen width.
-        bmp = resizeBitmap(bmp, SCREEN_WIDTH);
+        if (bmp != null) {
+            // We resize all bitmaps to screen width.
+            bmp = resizeBitmap(bmp, SCREEN_WIDTH);
 
-        bmpCache.put(url, bmp);
+            bmpCache.put(url, bmp);
+        }
         return bmp;
     }
 

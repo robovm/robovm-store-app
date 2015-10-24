@@ -278,7 +278,7 @@ public class BasketViewController extends UITableViewController {
                 colorLabel.setText(order.getColor().getName());
                 priceLabel.setText(order.getProduct().getPriceDescription());
 
-                String imageUrl = order.getProduct().getImageUrl();
+                String imageUrl = order.getColor().getImageUrls().get(0);
                 File image = ImageCache.getInstance().getImage(imageUrl);
                 if (image != null) {
                     getImageView().setImage(new UIImage(image));

@@ -61,7 +61,7 @@ public class SwipableListItem extends FrameLayout {
         shadow.setAntiAlias(true);
         listener = new ViewSwipeTouchListener(getContext(), R.id.swipeContent);
         setOnTouchListener(listener);
-        listener.setEventListener(new ViewSwipeTouchListener.EventListener() {
+        listener.addEventListener(new ViewSwipeTouchListener.EventListener() {
             @Override
             public void onSwipeGestureBegin() {}
 

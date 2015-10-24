@@ -19,7 +19,7 @@
             android:layout_gravity="left|bottom"
             android:layout_marginBottom="12dp">
         <TextView
-                android:text="Men's C# t-shirt"
+                android:text="Men's Java t-shirt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/productTitle"
@@ -28,6 +28,7 @@
                 android:paddingRight="8dp"
                 android:paddingBottom="8dp"
                 android:background="#ffffff"
+                android:shadowColor="@android:color/black"
                 android:textColor="#515151"/>
         <View
                 android:layout_width="match_parent"
@@ -53,7 +54,7 @@
                 android:paddingTop="8dp"
                 android:paddingRight="12dp"
                 android:paddingBottom="8dp"
-                android:background="@color/robo_blue"
+                android:background="@color/robo_green"
                 android:textColor="#ffffff"
                 android:textStyle="bold"
                 android:textAllCaps="true"/>

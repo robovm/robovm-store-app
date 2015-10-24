@@ -67,8 +67,7 @@ public class StoreApp extends UIApplicationDelegateAdapter {
         instance = this;
 
         ImageCache.getInstance().setSaveLocation(NSPathUtilities.getHomeDirectory() + "/Documents/");
-        RoboVMWebService.getInstance().setup(true); // TODO setup api service
-                                                    // without test
+        RoboVMWebService.getInstance().setup();
         ActionWrapper.WRAPPER = new ActionWrapper() {
             @Override
             public <T> void invoke(Action<T> action, T result) {
@@ -128,7 +127,8 @@ public class StoreApp extends UIApplicationDelegateAdapter {
     }
 
     public void showBasket() {
-        BasketViewController basketViewController = new BasketViewController(RoboVMWebService.getInstance().getBasket());
+        BasketViewController basketViewController = new BasketViewController(
+                RoboVMWebService.getInstance().getBasket());
         basketViewController.setCheckoutListener(() -> {
             if (RoboVMWebService.getInstance().isAuthenticated()) {
                 showAddress();

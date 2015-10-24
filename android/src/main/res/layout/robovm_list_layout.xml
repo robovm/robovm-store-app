@@ -10,10 +10,12 @@
             android:id="@android:id/list"
             android:divider="#00FFFFFF"
             android:dividerHeight="0dp"/>
-    <org.robovm.store.views.RoboVMSpinnerView
+    <ProgressBar
             android:id="@android:id/empty"
             android:layout_gravity="center"
+            android:indeterminateDrawable="@drawable/progress_drawable"
             android:layout_width="128dp"
             android:layout_height="112dp"
-            android:layout_marginBottom="64dp"/>
+            android:layout_marginBottom="64dp"
+            android:indeterminateOnly="true"/>
 </FrameLayout>

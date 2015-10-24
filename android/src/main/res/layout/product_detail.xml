@@ -29,7 +29,8 @@
                     android:layout_weight="1"
                     android:textSize="24sp"
                     android:gravity="bottom"
-                    android:textColor="@color/robo_purple"/>
+                    android:textStyle="bold"
+                    android:textColor="@color/robo_gray"/>
             <TextView
                     android:text="Free"
                     android:layout_width="wrap_content"
@@ -37,16 +38,14 @@
                     android:id="@+id/productPrice"
                     android:layout_marginRight="8dp"
                     android:textColor="@color/robo_blue"
-                    android:textAllCaps="true"
-                    android:textStyle="bold"
                     android:gravity="bottom"/>
         </LinearLayout>
         <TextView
-                android:text="Flaunt your C# pride in this svelte American Apparel t-shirt, and everyone around you will think LINQ stands for &quot;Lads in Nice Qlothing&quot;"
+                android:text="Lorem ipsum dolor siz amet"
                 android:id="@+id/productDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/robo_gray"
+                android:textColor="@color/robo_light_gray"
                 android:layout_marginBottom="8dp"/>
         <TableLayout
                 android:layout_width="match_parent"
@@ -58,7 +57,6 @@
                 <TextView
                         android:text="Size"
                         android:id="@+id/textView1"
-                        android:textAllCaps="true"
                         android:layout_column="0"
                         android:layout_gravity="left|center_vertical"
                         android:gravity="center"
@@ -73,7 +71,6 @@
                 <TextView
                         android:text="Color"
                         android:id="@+id/textView2"
-                        android:textAllCaps="true"
                         android:layout_column="0"
                         android:layout_gravity="left|center_vertical"
                         android:gravity="center"

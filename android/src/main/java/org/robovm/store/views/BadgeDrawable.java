@@ -38,11 +38,11 @@ public class BadgeDrawable extends Drawable {
 
         badgePaint = new Paint();
         badgePaint.setAntiAlias(true);
-        badgePaint.setColor(Colors.Blue);
+        badgePaint.setColor(Colors.White);
 
         textPaint = new Paint();
         textPaint.setAntiAlias(true);
-        textPaint.setColor(Colors.White);
+        textPaint.setColor(Colors.Green);
         textPaint.setTextSize(16);
         textPaint.setTextAlign(Paint.Align.CENTER);
     }

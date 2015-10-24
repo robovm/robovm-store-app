@@ -112,7 +112,7 @@ public class BasketFragment extends ListFragment {
                 view = LayoutInflater.from(context).inflate(R.layout.basket_item, parent, false);
                 ViewSwipeTouchListener swipper = ((SwipableListItem) view).getSwipeListener();
                 final View finalView = view;
-                swipper.setEventListener(new ViewSwipeTouchListener.EventListener() {
+                swipper.addEventListener(new ViewSwipeTouchListener.EventListener() {
                     @Override
                     public void onSwipeGestureBegin() {
                         parent.requestDisallowInterceptTouchEvent(true);
@@ -143,9 +143,9 @@ public class BasketFragment extends ListFragment {
             ((TextView) view.findViewById(R.id.productSize)).setText(order.getSize().getName());
 
             ImageView orderImage = (ImageView) view.findViewById(R.id.productImage);
-            orderImage.setImageResource(R.drawable.blue_shirt);
+            orderImage.setImageResource(R.drawable.product_image);
 
-            Images.setImageFromUrlAsync(orderImage, order.getProduct().getImageUrl());
+            Images.setImageFromUrlAsync(orderImage, order.getColor().getImageUrls().get(0));
 
             return view;
         }

@@ -117,7 +117,7 @@ public class ProductDetailViewController extends UITableViewController {
         });
 
         if (addedToBasket != null) {
-            addedToBasket.invoke(order);
+            addedToBasket.invoke(new Order(order));
         }
     }
 

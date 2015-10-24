@@ -97,7 +97,7 @@ public class ProductDetailsFragment extends Fragment implements ViewTreeObserver
             shouldAnimatePop = true;
             getActivity().getFragmentManager().popBackStack();
             if (addToBasketListener != null) {
-                addToBasketListener.invoke(order);
+                addToBasketListener.invoke(new Order(order));
             }
         });
 
@@ -185,7 +185,7 @@ public class ProductDetailsFragment extends Fragment implements ViewTreeObserver
             Activity activity = getActivity();
             if (activity != null) {
                 activity.runOnUiThread(() -> {
-                    productDrawable = new KenBurnsDrawable(Colors.DarkBlue);
+                    productDrawable = new KenBurnsDrawable(Colors.Green);
                     productDrawable.setFirstBitmap(img1);
                     productDrawable.setSecondBitmap(img2);
                     productImage.setImageDrawable(productDrawable);

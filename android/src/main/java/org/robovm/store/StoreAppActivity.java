@@ -43,7 +43,7 @@ public class StoreAppActivity extends Activity {
 
         super.onCreate(savedInstanceState);
 
-        RoboVMWebService.getInstance().setup(true);// TODO remove test mode
+        RoboVMWebService.getInstance().setup();
         ActionWrapper.WRAPPER = new RoboVMWebService.ActionWrapper() {
             @Override
             public <T> void invoke(Action<T> action, T result) {

@@ -25,13 +25,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ViewSwipeTouchListener extends GestureDetector.SimpleOnGestureListener implements View.OnTouchListener {
     private GestureDetector detector;
     private View targetView;
     private ViewConfiguration config;
     private int subviewID;
 
-    private EventListener listener;
+    private final List<EventListener> listeners = new ArrayList<>();
 
     public ViewSwipeTouchListener(Context context, int subviewID) {
         this.detector = new GestureDetector(context, this);
@@ -45,14 +48,39 @@ public class ViewSwipeTouchListener extends GestureDetector.SimpleOnGestureListe
             targetView = subviewID == 0 ? v : v.findViewById(subviewID);
         }
         if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
-            if (listener != null) {
+            for (EventListener listener : listeners) {
                 listener.onSwipeGestureEnd();
             }
-            boolean dismiss = event.getAction() != MotionEvent.ACTION_CANCEL &&
-                    targetView.getTranslationX() > targetView.getWidth() / 2;
-            snapView(dismiss);
+//            boolean dismiss = event.getAction() != MotionEvent.ACTION_CANCEL &&
+//                    targetView.getTranslationX() > targetView.getWidth() / 2;
+            snapView(false);
         }
         detector.onTouchEvent(event);
+        return true;
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        // We are only interested in an horizontal right-side fling
+        if (velocityY > velocityX || velocityX < 0) {
+            return super.onFling(e1, e2, velocityX, velocityY);
+        }
+        snapView(true);
+        return true;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        for (EventListener listener : listeners) {
+            listener.onSwipeGestureBegin();
+        }
+        distanceX = -distanceX;
+        if (Math.abs(distanceY) > Math.abs(distanceX) + config.getScaledTouchSlop()
+                || (distanceX < 0 && targetView.getTranslationX() <= 0)) {
+            return super.onScroll(e1, e2, distanceX, distanceY);
+        }
+        targetView.setTranslationX(Math.max(0, targetView.getTranslationX() + distanceX));
+        targetView.setAlpha((targetView.getWidth() - targetView.getTranslationX()) / ((float) targetView.getWidth()));
         return true;
     }
 
@@ -82,7 +110,8 @@ public class ViewSwipeTouchListener extends GestureDetector.SimpleOnGestureListe
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     animation.removeAllListeners();
-                    if (listener != null) {
+
+                    for (EventListener listener : listeners) {
                         listener.onItemSwipped();
                     }
                 }
@@ -97,33 +126,12 @@ public class ViewSwipeTouchListener extends GestureDetector.SimpleOnGestureListe
         a.start();
     }
 
-    @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        // We are only interested in an horizontal right-side fling
-        if (velocityY > velocityX || velocityX < 0) {
-            return super.onFling(e1, e2, velocityX, velocityY);
-        }
-        snapView(true);
-        return true;
+    public void addEventListener(EventListener listener) {
+        listeners.add(listener);
     }
 
-    @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        if (listener != null) {
-            listener.onSwipeGestureBegin();
-        }
-        distanceX = -distanceX;
-        if (Math.abs(distanceY) > Math.abs(distanceX) + config.getScaledTouchSlop() || (distanceX < 0
-                && targetView.getTranslationX() <= 0)) {
-            return super.onScroll(e1, e2, distanceX, distanceY);
-        }
-        targetView.setTranslationX(Math.max(0, targetView.getTranslationX() + distanceX));
-        targetView.setAlpha((targetView.getWidth() - targetView.getTranslationX()) / ((float) targetView.getWidth()));
-        return true;
-    }
-
-    public void setEventListener(EventListener listener) {
-        this.listener = listener;
+    public void removeEventListener(EventListener listener) {
+        listeners.remove(listener);
     }
 
     public interface EventListener {
