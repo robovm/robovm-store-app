@@ -58,7 +58,7 @@ public class PrefillRoboVMAccountInstructionsView extends UIView {
         instructions.setTextAlignment(NSTextAlignment.Center);
         instructions.setNumberOfLines(3);
         instructions.setText(
-                "A small task is required to get your free shirt. Please add your RoboVM account email address to LoginFragment.java then revisit this screen.");
+                "A small task is required to get your free shirt. Please add your RoboVM account email address to LoginViewController.java then revisit this screen.");
         addSubview(instructions);
 
         addConstraint(new NSLayoutConstraint(tools, NSLayoutAttribute.CenterX, NSLayoutRelation.Equal, this,
