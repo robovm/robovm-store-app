@@ -200,9 +200,8 @@ public class ProductDetailsFragment extends Fragment implements ViewTreeObserver
                                         .getHeight());
                         finalMatrix.postScale(1.27f, 1.27f);
                         kenBurnsMovement = ValueAnimator.ofObject(evaluator, new Matrix(), finalMatrix);
-                        kenBurnsMovement
-                                .addUpdateListener(
-                                        (animator) -> productDrawable.setMatrix((Matrix) animator.getAnimatedValue()));
+                        kenBurnsMovement.addUpdateListener(
+                                (animator) -> productDrawable.setMatrix((Matrix) animator.getAnimatedValue()));
                         kenBurnsMovement.setDuration(14000);
                         kenBurnsMovement.setRepeatMode(ValueAnimator.REVERSE);
                         kenBurnsMovement.setRepeatCount(ValueAnimator.INFINITE);

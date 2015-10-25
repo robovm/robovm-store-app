@@ -158,24 +158,27 @@ public class ProcessingViewController extends UIViewController {
     }
 
     private void tweet() {
-        RoboVMWebService
-                .getInstance()
-                .getProducts(
-                        (products) -> {
-                            SLComposeViewController svc = new SLComposeViewController();
-                            if (products != null && products.size() > 0) {
-                                Collections.shuffle(products);
+        if (SLComposeViewController.isAvailable(SLServiceType.Twitter)) {
+            RoboVMWebService
+                    .getInstance()
+                    .getProducts(
+                            (products) -> {
+                                SLComposeViewController svc = new SLComposeViewController(SLServiceType.Twitter);
+                                if (products != null && products.size() > 0) {
+                                    Collections.shuffle(products);
 
-                                String imageUrl = products.get(0).getImageUrl();
-                                File image = ImageCache.getInstance().getImage(imageUrl);
-                                if (image != null) {
-                                    svc.addImage(new UIImage(image));
+                                    String imageUrl = products.get(0).getImageUrl();
+                                    File image = ImageCache.getInstance().getImage(imageUrl);
+                                    if (image != null) {
+                                        svc.addImage(new UIImage(image));
+                                    }
                                 }
-                            }
-                            svc.addURL(new NSURL("http://robovm.com"));
-                            svc.setInitialText("I just built a native iOS app with Java using #RoboVM and all I got was this free Java t-shirt!");
-                            presentViewController(svc, true, null);
-                        });
+                                svc.addURL(new NSURL("http://robovm.com"));
+                                svc.setInitialText(
+                                        "I just built a native iOS app with Java using #RoboVM and all I got was this free T-shirt!");
+                                presentViewController(svc, true, null);
+                            });
+        }
     }
 
     public void setOrderPlacedListener(Runnable listener) {
