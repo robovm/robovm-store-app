@@ -38,14 +38,19 @@ import org.robovm.store.views.SlidingLayout;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class ProductDetailsFragment extends Fragment implements ViewTreeObserver.OnGlobalLayoutListener {
+    private static final float ENLARGE_RATIO = 1.1f;
+
     private Action<Order> addToBasketListener;
 
     private Product currentProduct;
     private Order order;
 
     private ImageView productImage;
+
+    private final Random random = new Random();
     private int currentIndex;
     private boolean shouldAnimatePop;
     private BadgeDrawable basketBadge;
@@ -176,8 +181,6 @@ public class ProductDetailsFragment extends Fragment implements ViewTreeObserver
     public void onGlobalLayout() {
         productImage.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
-        final int deltaX = 100;
-
         new Thread(() -> {
             Bitmap img1 = Images.fromUrl(images.get(0));
             Bitmap img2 = Images.fromUrl(images.get(1));
@@ -193,13 +196,121 @@ public class ProductDetailsFragment extends Fragment implements ViewTreeObserver
 
                     // Check for null bitmaps due to decode errors:
                     if (productDrawable.getFirstBitmap() != null) {
+                        float resizeRatio = -1;
+                        float widthDiff = -1;
+                        float heightDiff = -1;
+                        float zoomInX = -1;
+                        float zoomInY = -1;
+                        float moveX = -1;
+                        float moveY = -1;
+
+                        float frameWidth = productImage.getWidth();
+                        float frameHeight = productImage.getHeight();
+
+                        float imageWidth = productDrawable.getFirstBitmap().getWidth();
+                        float imageHeight = productDrawable.getFirstBitmap().getHeight();
+
+                        // Wider than screen
+                        if (imageWidth > frameWidth) {
+                            widthDiff = imageWidth - frameWidth;
+
+                            // Higher than screen
+                            if (imageHeight > frameHeight) {
+                                heightDiff = imageHeight - frameHeight;
+
+                                if (widthDiff > heightDiff)
+                                    resizeRatio = frameHeight / imageHeight;
+                                else
+                                    resizeRatio = frameWidth / imageWidth;
+
+                                // No higher than screen [OK]
+                            } else {
+                                heightDiff = frameHeight - imageHeight;
+
+                                if (widthDiff > heightDiff)
+                                    resizeRatio = frameWidth / imageWidth;
+                                else
+                                    resizeRatio = frameHeight / imageHeight;
+                            }
+                            // No wider than screen
+                        } else {
+                            widthDiff = frameWidth - imageWidth;
+
+                            // Higher than screen [OK]
+                            if (imageHeight > frameHeight) {
+                                heightDiff = imageHeight - frameHeight;
+
+                                if (widthDiff > heightDiff)
+                                    resizeRatio = imageHeight / frameHeight;
+                                else
+                                    resizeRatio = frameWidth / imageWidth;
+
+                                // No higher than screen [OK]
+                            } else {
+                                heightDiff = frameHeight - imageHeight;
+
+                                if (widthDiff > heightDiff)
+                                    resizeRatio = frameWidth / imageWidth;
+                                else
+                                    resizeRatio = frameHeight / imageHeight;
+                            }
+                        }
+
+                        // Resize the image.
+                        float optimusWidth = (imageWidth * resizeRatio) * ENLARGE_RATIO;
+                        float optimusHeight = (imageHeight * resizeRatio) * ENLARGE_RATIO;
+
+                        float originX = (frameWidth - optimusWidth) / 2;
+                        float originY = 0;
+
+                        float maxMoveX = Math.min(optimusWidth - frameWidth, 50f);
+                        float maxMoveY = Math.min(optimusHeight - frameHeight, 50f) * 2f / 3;
+
+                        float rotation = random.nextInt(9) / 100f;
+
+                        switch (random.nextInt(3)) {
+                        case 0:
+                            zoomInX = 1.25f;
+                            zoomInY = 1.25f;
+                            moveX = -maxMoveX;
+                            moveY = -maxMoveY;
+                            break;
+                        case 1:
+                            zoomInX = 1.1f;
+                            zoomInY = 1.1f;
+                            moveX = -maxMoveX;
+                            moveY = maxMoveY;
+                            originY = -moveY * zoomInY * 1.1f;
+                            break;
+                        case 2:
+                            zoomInX = 1.2f;
+                            zoomInY = 1.2f;
+                            moveX = 0;
+                            moveY = -maxMoveY;
+                            break;
+                        default:
+                            zoomInX = 1.2f;
+                            zoomInY = 1.2f;
+                            moveX = 0;
+                            moveY = maxMoveY;
+                            originY = -moveY * zoomInY * 1.1f;
+                            break;
+                        }
+
                         MatrixEvaluator evaluator = new MatrixEvaluator();
+                        Matrix startMatrix = new Matrix();
+                        startMatrix.setTranslate(originX, originY);
+                        startMatrix
+                                .postScale(resizeRatio * ENLARGE_RATIO, resizeRatio * ENLARGE_RATIO, originX, originY);
+
                         Matrix finalMatrix = new Matrix();
-                        finalMatrix.setTranslate(-deltaX,
-                                -(float) productDrawable.getFirstBitmap().getHeight() / 1.3f + (float) productImage
-                                        .getHeight());
-                        finalMatrix.postScale(1.27f, 1.27f);
-                        kenBurnsMovement = ValueAnimator.ofObject(evaluator, new Matrix(), finalMatrix);
+                        finalMatrix.setTranslate(originX + moveX, originY + moveY);
+                        finalMatrix
+                                .postScale(resizeRatio * ENLARGE_RATIO * zoomInX, resizeRatio * ENLARGE_RATIO * zoomInY,
+                                        originX, originY);
+                        finalMatrix.postRotate(rotation);
+
+                        kenBurnsMovement = ValueAnimator.ofObject(evaluator, startMatrix, finalMatrix);
                         kenBurnsMovement.addUpdateListener(
                                 (animator) -> productDrawable.setMatrix((Matrix) animator.getAnimatedValue()));
                         kenBurnsMovement.setDuration(14000);

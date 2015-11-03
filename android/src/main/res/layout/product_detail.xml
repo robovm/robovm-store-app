@@ -38,7 +38,7 @@
                     android:id="@+id/productPrice"
                     android:layout_marginRight="8dp"
                     android:textColor="@color/robo_blue"
-                    android:gravity="bottom"/>
+                    android:gravity="center"/>
         </LinearLayout>
         <TextView
                 android:text="Lorem ipsum dolor siz amet"

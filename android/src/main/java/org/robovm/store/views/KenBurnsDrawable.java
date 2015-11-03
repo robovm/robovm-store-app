@@ -111,9 +111,7 @@ public class KenBurnsDrawable extends Drawable implements BitmapHolder {
     }
 
     @Override
-    public void setColorFilter(ColorFilter colorFilter) {
-
-    }
+    public void setColorFilter(ColorFilter colorFilter) {}
 
     @Override
     public int getOpacity() {

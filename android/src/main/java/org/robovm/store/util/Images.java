@@ -79,20 +79,9 @@ public class Images {
     private static Bitmap saveBitmap(String url, File imagePath) {
         Bitmap bmp = BitmapFactory.decodeFile(imagePath.getAbsolutePath());
         if (bmp != null) {
-            // We resize all bitmaps to screen width.
-            bmp = resizeBitmap(bmp, SCREEN_WIDTH);
-
             bmpCache.put(url, bmp);
         }
         return bmp;
-    }
-
-    private static Bitmap resizeBitmap(Bitmap bitmap, float maxImageSize) {
-        float ratio = Math.min(maxImageSize / bitmap.getWidth(), maxImageSize / bitmap.getHeight());
-        int width = Math.round(ratio * bitmap.getWidth());
-        int height = Math.round(ratio * bitmap.getHeight());
-
-        return Bitmap.createScaledBitmap(bitmap, width, height, true);
     }
 
     public static void setScreenWidth(float screenWidth) {

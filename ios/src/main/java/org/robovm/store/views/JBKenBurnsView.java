@@ -195,7 +195,7 @@ public class JBKenBurnsView extends UIView {
         double maxMoveX = Math.min(optimusWidth - frameWidth, 50f);
         double maxMoveY = Math.min(optimusHeight - frameHeight, 50f) * 2f / 3;
 
-        float rotation = random.nextInt(9) / 100;
+        float rotation = random.nextInt(9) / 100f;
 
         switch (random.nextInt(3)) {
         case 0:
