@@ -41,6 +41,7 @@ import org.robovm.apple.uikit.UITableViewModel;
 import org.robovm.apple.uikit.UITableViewRowAnimation;
 import org.robovm.apple.uikit.UIView;
 import org.robovm.apple.uikit.UIViewContentMode;
+import org.robovm.store.StoreApp;
 import org.robovm.store.model.Basket;
 import org.robovm.store.model.Order;
 import org.robovm.store.util.Colors;
@@ -66,7 +67,6 @@ public class BasketViewController extends UITableViewController {
         tableView.setSeparatorStyle(UITableViewCellSeparatorStyle.None);
         tableView.setRowHeight(75);
         tableView.setTableFooterView(new UIView(new CGRect(0, 0, 0, BottomButtonView.HEIGHT)));
-
         getView().addSubview(bottomView = new BottomButtonView("Checkout", (b, e) -> {
             if (checkout != null) {
                 checkout.run();
@@ -82,6 +82,7 @@ public class BasketViewController extends UITableViewController {
         getNavigationItem().setRightBarButtonItem(new UIBarButtonItem(totalAmount));
         updateTotals();
     }
+
 
     public void updateTotals() {
         if (basket.size() == 0) {
@@ -160,14 +161,22 @@ public class BasketViewController extends UITableViewController {
         }
 
         @Override
+        public void didSelectRow(UITableView tableView, NSIndexPath indexPath) {
+            Order order = basket.get(indexPath.getRow());
+            if (order != null) {
+                StoreApp.getInstance().showProductInBasketDetail(order);
+            }
+        }
+
+        @Override
         public UITableViewCellEditingStyle getEditingStyleForRow(UITableView tableView,
-                NSIndexPath indexPath) {
+                                                                 NSIndexPath indexPath) {
             return UITableViewCellEditingStyle.Delete;
         }
 
         @Override
         public void commitEditingStyleForRow(UITableView tableView, UITableViewCellEditingStyle editingStyle,
-                NSIndexPath indexPath) {
+                                             NSIndexPath indexPath) {
             if (editingStyle == UITableViewCellEditingStyle.Delete) {
                 basket.remove(indexPath.getRow());
                 tableView.deleteRow(indexPath, UITableViewRowAnimation.Fade);

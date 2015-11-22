@@ -76,8 +76,12 @@ public class ProductDetailViewController extends UITableViewController {
     private List<String> imageUrls;
 
     public ProductDetailViewController(Product product) {
-        this.currentProduct = product;
-        this.order = new Order(product);
+        this(new Order(product), false);
+    }
+
+    public ProductDetailViewController(Order order, boolean isAlreadyInBasket) {
+        this.currentProduct = order.getProduct();
+        this.order = order;
 
         setTitle(currentProduct.getName());
         loadProductData();
@@ -87,10 +91,42 @@ public class ProductDetailViewController extends UITableViewController {
         tshirtIcon = UIImage.getImage("t-shirt");
 
         bottomView = new BottomButtonView();
-        bottomView.setButtonText("Add to Basket");
-        bottomView.setButtonTapListener((b, e) -> addToBasket());
+        if (isAlreadyInBasket) {
+            bottomView.setButtonText("Update in Basket");
+            bottomView.setButtonTapListener((b, e) -> updateItemInBasket());
+        } else {
+            bottomView.setButtonText("Add to Basket");
+            bottomView.setButtonTapListener((b, e) -> addToBasket());
+        }
 
         getView().addSubview(bottomView);
+    }
+
+    private void updateItemInBasket() {
+        UINavigationController navigation = getNavigationController();
+
+        CGPoint center = bottomView.getButton().convertPointToView(bottomView.getButton().getImageView().getCenter(),
+                navigation.getView());
+        UIImageView imageView = new UIImageView(tshirtIcon);
+        imageView.setCenter(center);
+        imageView.setContentMode(UIViewContentMode.ScaleAspectFill);
+
+        UIImageView backgroundView = new UIImageView(UIImage.getImage("circle"));
+        backgroundView.setCenter(center);
+
+        navigation.getView().addSubviews(backgroundView, imageView);
+
+        UIView targetView = (UIView) getNavigationItem().getRightBarButtonItem().getKeyValueCoder().getValue("view");
+        CGPoint targetPosition = new CGPoint(targetView.getCenter().getX() + targetView.getFrame().getWidth() / 3,
+                targetView.getCenter().getY() + targetView.getFrame().getHeight() / 2);
+
+        animateView(imageView, targetPosition, null);
+        animateView(backgroundView, targetPosition, () -> {
+            getNavigationItem().setRightBarButtonItem(StoreApp.getInstance().createBasketButton());
+        });
+
+
+        StoreApp.getInstance().showBasket();
     }
 
     private void addToBasket() {
@@ -252,6 +288,8 @@ public class ProductDetailViewController extends UITableViewController {
             ProductSize size = sizeOptions.get(sizeCell.getSelectedIndex());
             order.setSize(size);
         });
+        sizeCell.setSelectedItem(order.getSize().getName());
+
         cells.add(sizeCell);
 
         colorCell = new StringSelectionCell(getView());
@@ -266,6 +304,7 @@ public class ProductDetailViewController extends UITableViewController {
             ProductColor color = colorOptions.get(colorCell.getSelectedIndex());
             order.setColor(color);
         });
+        colorCell.setSelectedItem(order.getColor().getName());
         cells.add(colorCell);
 
         return cells;

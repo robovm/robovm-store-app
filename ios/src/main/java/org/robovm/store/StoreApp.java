@@ -37,6 +37,7 @@ import org.robovm.apple.uikit.UIViewController;
 import org.robovm.apple.uikit.UIWindow;
 import org.robovm.store.api.RoboVMWebService;
 import org.robovm.store.api.RoboVMWebService.ActionWrapper;
+import org.robovm.store.model.Order;
 import org.robovm.store.model.Product;
 import org.robovm.store.util.Action;
 import org.robovm.store.util.Colors;
@@ -119,6 +120,15 @@ public class StoreApp extends UIApplicationDelegateAdapter {
 
     public void showProductDetail(Product product) {
         ProductDetailViewController productDetails = new ProductDetailViewController(product);
+        productDetails.setAddToBasketListener((order) -> {
+            RoboVMWebService.getInstance().getBasket().add(order);
+            updateProductsCount();
+        });
+        navigation.pushViewController(productDetails, true);
+    }
+
+    public void showProductInBasketDetail(Order existingOrder) {
+        ProductDetailViewController productDetails = new ProductDetailViewController(existingOrder, true);
         productDetails.setAddToBasketListener((order) -> {
             RoboVMWebService.getInstance().getBasket().add(order);
             updateProductsCount();
