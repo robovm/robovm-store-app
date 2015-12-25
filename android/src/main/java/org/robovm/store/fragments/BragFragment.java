@@ -23,7 +23,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+
 import org.robovm.store.R;
+import static org.robovm.store.util.I18N.*;
 
 public class BragFragment extends Fragment {
     @Override
@@ -35,8 +38,16 @@ public class BragFragment extends Fragment {
     @Override
     public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.brag_screen, null);
-        Button btn = (Button) view.findViewById(R.id.bragButton);
-        btn.setOnClickListener((v) -> bragOnTwitter());
+
+        Button bragBtn = (Button) view.findViewById(R.id.bragButton);
+        bragBtn.setOnClickListener((v) -> bragOnTwitter());
+        bragBtn.setText(getLocalizedString(Key.brag_to_friends));
+
+        TextView orderComplete = (TextView)view.findViewById(R.id.orderComplete);
+        orderComplete.setText(getLocalizedString(Key.order_complete));
+
+        TextView orderReceived = (TextView)view.findViewById(R.id.orderReceived);
+        orderReceived.setText(getLocalizedString(Key.order_received));
 
         return view;
     }

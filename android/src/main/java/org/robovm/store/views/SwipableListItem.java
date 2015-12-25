@@ -84,7 +84,9 @@ public class SwipableListItem extends FrameLayout {
     }
 
     public View getSecondaryContent() {
-        return secondaryContent == null ? secondaryContent = findViewById(R.id.swipeAfter) : secondaryContent;
+        return null;
+        // The id 'swipeAfter' doesn't exist anymore
+        //return secondaryContent == null ? secondaryContent = findViewById(R.id.swipeAfter) : secondaryContent;
     }
 
     @Override

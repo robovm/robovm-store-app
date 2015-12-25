@@ -40,6 +40,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import static org.robovm.store.util.I18N.*;
+
 public class ProductDetailsFragment extends Fragment implements ViewTreeObserver.OnGlobalLayoutListener {
     private static final float ENLARGE_RATIO = 1.1f;
 
@@ -84,7 +86,18 @@ public class ProductDetailsFragment extends Fragment implements ViewTreeObserver
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.product_detail, null, true);
+        View view =  inflater.inflate(R.layout.product_detail, null, true);
+
+        TextView sizeView = (TextView)view.findViewById(R.id.sizeView);
+        sizeView.setText(getLocalizedString(Key.size));
+
+        TextView colorView = (TextView)view.findViewById(R.id.colorView);
+        colorView.setText(getLocalizedString(Key.color));
+
+        Button addToBasket = (Button)view.findViewById(R.id.addToBasket);
+        addToBasket.setText(getLocalizedString(Key.add_to_basket));
+
+        return view;
     }
 
     @Override

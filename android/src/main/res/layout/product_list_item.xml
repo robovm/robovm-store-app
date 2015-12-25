@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/linearLayout1"
-            android:layout_gravity="left|bottom"
+            android:layout_gravity="start|bottom"
             android:layout_marginBottom="12dp">
         <TextView
                 android:text="Men's Java t-shirt"
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/linearLayout2"
-            android:layout_gravity="right|bottom"
+            android:layout_gravity="end|bottom"
             android:layout_marginBottom="12dp">
         <TextView
                 android:text="Free"

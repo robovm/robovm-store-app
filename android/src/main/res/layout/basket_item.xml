@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<org.robovm.store.views.SwipableListItem xmlns:android="http://schemas.android.com/apk/res/android"
-                                         android:layout_width="match_parent"
-                                         android:layout_height="wrap_content"
-                                         android:id="@+id/SwipeContainer">
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="horizontal"
             android:minWidth="25px"
             android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:attr/colorBackground"
-            android:id="@+id/swipeContent">
+            android:background="@drawable/list_item_selector"
+            android:id="@+id/swipeContent"><!--?android:attr/colorBackground-->
         <ImageView
                 android:src="@android:drawable/ic_menu_gallery"
                 android:layout_width="72dp"
@@ -23,7 +19,7 @@
                 android:orientation="vertical"
                 android:minWidth="25px"
                 android:minHeight="25px"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/linearLayout2"
                 android:layout_gravity="center"
@@ -41,7 +37,7 @@
                     android:id="@+id/linearLayout3">
                 <TextView
                         android:text="Men's Java t-shirt"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/productTitle"
                         android:layout_weight="1"
@@ -74,38 +70,3 @@
                     android:textColor="#8c8c8c"/>
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-            android:orientation="horizontal"
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/swipeAfter"
-            android:visibility="invisible">
-        <TextView
-                android:text="Item removed"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/textView1"
-                android:textSize="20sp"
-                android:gravity="center"
-                android:layout_weight="1"/>
-        <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:id="@+id/view1"
-                android:background="#aaaaaa"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"/>
-        <Button
-                android:text="Cancel"
-                android:id="@+id/button1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@null"
-                android:layout_gravity="center"
-                android:textAllCaps="true"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"/>
-    </LinearLayout>
-</org.robovm.store.views.SwipableListItem>

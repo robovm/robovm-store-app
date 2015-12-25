@@ -43,6 +43,7 @@ import org.robovm.store.api.RoboVMWebService;
 import org.robovm.store.api.ValidationError;
 import org.robovm.store.model.User;
 import org.robovm.store.util.Colors;
+import org.robovm.store.util.I18N;
 import org.robovm.store.util.ImageCache;
 import org.robovm.store.views.ImageButton;
 
@@ -56,8 +57,8 @@ public class ProcessingViewController extends UIViewController {
     public ProcessingViewController(User user) {
         this.user = user;
 
-        setTitle("Processing");
-        getNavigationItem().setHidesBackButton(true);
+        setTitle(I18N.getLocalizedString(I18N.Key.processing_title));
+                getNavigationItem().setHidesBackButton(true);
     }
 
     @Override
@@ -95,50 +96,13 @@ public class ProcessingViewController extends UIViewController {
             if (response.isSuccess()) {
                 RoboVMWebService.getInstance().getBasket().clear();
 
-                processView.setStatus("Your order has been placed!");
-                processView.stopGear();
+                processView.setStatus(I18N.getLocalizedString(I18N.Key.order_placed));
+                        processView.stopGear();
 
                 showSuccess();
             } else {
                 List<ValidationError> errors = response.getErrors();
-                String alertMessage = "An unexpected error occurred! Please try again later!";
-
-                if (errors != null) { // We handle only the first error.
-                    ValidationError error = errors.get(0);
-
-                    String message = error.getMessage();
-                    String field = error.getField();
-                    if (field == null) {
-                        alertMessage = message;
-                    } else {
-                        switch (field) {
-                        case "firstName":
-                            alertMessage = "First name is required";
-                            break;
-                        case "lastName":
-                            alertMessage = "Last name is required";
-                            break;
-                        case "address1":
-                            alertMessage = "Address is required";
-                            break;
-                        case "city":
-                            alertMessage = "City is required";
-                            break;
-                        case "zipCode":
-                            alertMessage = "ZIP code is required";
-                            break;
-                        case "phone":
-                            alertMessage = "Phone number is required";
-                            break;
-                        case "country":
-                            alertMessage = "Country is required";
-                            break;
-                        default:
-                            alertMessage = message;
-                            break;
-                        }
-                    }
-                }
+                String alertMessage = ValidationError.getValidationAlertMessage(errors);
                 showErrorAlert(alertMessage);
                 getNavigationController().popViewController(true);
             }
@@ -146,7 +110,7 @@ public class ProcessingViewController extends UIViewController {
     }
 
     private void showErrorAlert(String message) {
-        new UIAlertView("Error", message, null, "OK").show();
+        new UIAlertView(I18N.getLocalizedString(I18N.Key.error), message, null, I18N.getLocalizedString(I18N.Key.ok)).show();
     }
 
     private void showSuccess() {
@@ -175,8 +139,8 @@ public class ProcessingViewController extends UIViewController {
                                 }
                                 svc.addURL(new NSURL("http://robovm.com"));
                                 svc.setInitialText(
-                                        "I just built a native iOS app with Java using #RoboVM and all I got was this free T-shirt!");
-                                presentViewController(svc, true, null);
+                                        I18N.getLocalizedString(I18N.Key.tweet_text));
+                                                presentViewController(svc, true, null);
                             });
         }
     }
@@ -210,13 +174,13 @@ public class ProcessingViewController extends UIViewController {
 
             tryAgain = new ImageButton();
             tryAgain.setTintColor(Colors.White);
-            tryAgain.setText("Try Again");
-            tryAgain.addOnTouchUpInsideListener((b, e) -> {
-                animate(.3, tryAgain::removeFromSuperview);
-                if (tryAgainListener != null) {
-                    tryAgainListener.run();
-                }
-            });
+            tryAgain.setText(I18N.getLocalizedString(I18N.Key.try_again));
+                    tryAgain.addOnTouchUpInsideListener((b, e) -> {
+                        animate(.3, tryAgain::removeFromSuperview);
+                        if (tryAgainListener != null) {
+                            tryAgainListener.run();
+                        }
+                    });
         }
 
         @Override
@@ -233,7 +197,7 @@ public class ProcessingViewController extends UIViewController {
         }
 
         public void spinGear() {
-            setStatus("Processing Order...");
+            setStatus(I18N.getLocalizedString(I18N.Key.processing_order));
             if (!isSpinning) {
                 isSpinning = true;
                 startGear();
@@ -317,8 +281,8 @@ public class ProcessingViewController extends UIViewController {
             addSubview(check);
 
             label1 = new UILabel();
-            label1.setText("Order Complete");
-            label1.setTextAlignment(NSTextAlignment.Center);
+            label1.setText(I18N.getLocalizedString(I18N.Key.order_complete));
+                    label1.setTextAlignment(NSTextAlignment.Center);
             label1.setFont(UIFont.getBoldSystemFont(25));
             label1.setTextColor(Colors.White);
             label1.setAlpha(0);
@@ -326,8 +290,8 @@ public class ProcessingViewController extends UIViewController {
             label1.sizeToFit();
 
             label2 = new UILabel();
-            label2.setText("We've received your order and we'll email you as soon as your items ship.");
-            label2.setTextAlignment(NSTextAlignment.Center);
+            label2.setText(I18N.getLocalizedString(I18N.Key.order_received));
+                    label2.setTextAlignment(NSTextAlignment.Center);
             label2.setFont(UIFont.getSystemFont(17));
             label2.setNumberOfLines(0);
             label2.setLineBreakMode(NSLineBreakMode.WordWrapping);
@@ -337,8 +301,8 @@ public class ProcessingViewController extends UIViewController {
             label2.sizeToFit();
 
             twitter = new ImageButton();
-            twitter.setText("Brag on Twitter");
-            twitter.setImage(UIImage.getImage("twitter").newImage(UIImageRenderingMode.AlwaysTemplate));
+            twitter.setText(I18N.getLocalizedString(I18N.Key.brag_twitter));
+                    twitter.setImage(UIImage.getImage("twitter").newImage(UIImageRenderingMode.AlwaysTemplate));
             twitter.setTintColor(Colors.White);
             twitter.setFont(UIFont.getSystemFont(20));
             twitter.setAlpha(0);
@@ -348,8 +312,8 @@ public class ProcessingViewController extends UIViewController {
             }
 
             done = new ImageButton();
-            done.setText("Done");
-            done.setTintColor(Colors.White);
+            done.setText(I18N.getLocalizedString(I18N.Key.done));
+                    done.setTintColor(Colors.White);
             done.setFont(UIFont.getSystemFont(20));
             done.setAlpha(0);
             addSubview(done);

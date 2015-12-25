@@ -52,6 +52,7 @@ import org.robovm.store.model.Product;
 import org.robovm.store.model.ProductColor;
 import org.robovm.store.model.ProductSize;
 import org.robovm.store.util.Action;
+import org.robovm.store.util.I18N;
 import org.robovm.store.util.ImageCache;
 import org.robovm.store.views.BottomButtonView;
 import org.robovm.store.views.CustomViewCell;
@@ -87,7 +88,7 @@ public class ProductDetailViewController extends UITableViewController {
         tshirtIcon = UIImage.getImage("t-shirt");
 
         bottomView = new BottomButtonView();
-        bottomView.setButtonText("Add to Basket");
+        bottomView.setButtonText(I18N.getLocalizedString(I18N.Key.add_to_basket));
         bottomView.setButtonTapListener((b, e) -> addToBasket());
 
         getView().addSubview(bottomView);
@@ -241,7 +242,7 @@ public class ProductDetailViewController extends UITableViewController {
         List<UITableViewCell> cells = new ArrayList<>();
 
         sizeCell = new StringSelectionCell(getView());
-        sizeCell.setText("Size");
+        sizeCell.setText(I18N.getLocalizedString(I18N.Key.size));
         List<String> sizeItems = new ArrayList<>();
         for (ProductSize size : sizeOptions) {
             sizeItems.add(size.getName());
@@ -255,7 +256,7 @@ public class ProductDetailViewController extends UITableViewController {
         cells.add(sizeCell);
 
         colorCell = new StringSelectionCell(getView());
-        colorCell.setText("Color");
+        colorCell.setText(I18N.getLocalizedString(I18N.Key.color));
         List<String> colorItems = new ArrayList<>();
         for (ProductColor color : colorOptions) {
             colorItems.add(color.getName());

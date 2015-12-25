@@ -23,7 +23,6 @@
     <TextView
             style="@style/RoboSubtitleText"
             android:id="@+id/explanationTextView"
-            android:text="A small task is required to get your free shirt.\nPlease add your RoboVM account email address to LoginFragment.java then revisit this screen."
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"/>

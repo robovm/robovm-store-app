@@ -24,16 +24,16 @@ import org.robovm.apple.uikit.UIScrollView;
 import org.robovm.apple.uikit.UIView;
 import org.robovm.apple.uikit.UIViewController;
 import org.robovm.store.api.RoboVMWebService;
+import org.robovm.store.util.I18N;
 import org.robovm.store.util.ProgressUI;
 import org.robovm.store.views.LoginView;
 import org.robovm.store.views.PrefillRoboVMAccountInstructionsView;
 
 @SuppressWarnings("deprecation")
 public class LoginViewController extends UIViewController {
-    // TODO: Enter your RoboVM account email address here
     // If you do not have a RoboVM Account please sign up here:
     // https://account.robovm.com/#/register
-    private static final String ROBOVM_ACCOUNT_EMAIL = "";
+    private static final String ROBOVM_ACCOUNT_EMAIL = "ilanshiber@gmail.com";
 
     private UIView contentView;
     private LoginView loginView;
@@ -44,10 +44,10 @@ public class LoginViewController extends UIViewController {
     private Runnable loginSuccessListener;
 
     public LoginViewController() {
-        setTitle("Log in");
+        setTitle(I18N.getLocalizedString(I18N.Key.log_in_title));
 
-        // This hides the back button text when you leave this View Controller
-        getNavigationItem().setBackBarButtonItem(new UIBarButtonItem("", UIBarButtonItemStyle.Plain));
+                // This hides the back button text when you leave this View Controller
+                getNavigationItem().setBackBarButtonItem(new UIBarButtonItem("", UIBarButtonItemStyle.Plain));
         setAutomaticallyAdjustsScrollViewInsets(false);
     }
 
@@ -84,28 +84,28 @@ public class LoginViewController extends UIViewController {
     }
 
     private void login(String username, String password) {
-        ProgressUI.show("Logging in...", this);
+        ProgressUI.show(I18N.getLocalizedString(I18N.Key.logging_in), this);
 
-        RoboVMWebService.getInstance().authenticate(username, password, (success) -> {
-            ProgressUI.hide();
+                RoboVMWebService.getInstance().authenticate(username, password, (success) -> {
+                    ProgressUI.hide();
 
-            if (success) {
-                if (loginSuccessListener != null) {
-                    loginSuccessListener.run();
-                }
-            } else {
-                UIAlertView alert = new UIAlertView("Could not log in!",
-                        "Please verify your RoboVM account credentials and try again", null, "OK");
-                alert.show();
-                alert.setDelegate(new UIAlertViewDelegateAdapter() {
-                    @Override
-                    public void clicked(UIAlertView alertView, long buttonIndex) {
-                        loginView.getPasswordField().setSelected(true);
-                        loginView.getPasswordField().becomeFirstResponder();
+                    if (success) {
+                        if (loginSuccessListener != null) {
+                            loginSuccessListener.run();
+                        }
+                    } else {
+                        UIAlertView alert = new UIAlertView(I18N.getLocalizedString(I18N.Key.could_not_log_in),
+                                I18N.getLocalizedString(I18N.Key.verify_credentials), null, I18N.getLocalizedString(I18N.Key.ok));
+                        alert.show();
+                        alert.setDelegate(new UIAlertViewDelegateAdapter() {
+                            @Override
+                            public void clicked(UIAlertView alertView, long buttonIndex) {
+                                loginView.getPasswordField().setSelected(true);
+                                loginView.getPasswordField().becomeFirstResponder();
+                            }
+                        });
                     }
                 });
-            }
-        });
     }
 
     public void setLoginSuccessListener(Runnable listener) {

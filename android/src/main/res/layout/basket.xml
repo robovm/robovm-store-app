@@ -13,7 +13,6 @@
                 android:layout_weight="1"/>
         <Button
                 style="@style/RoboButton"
-                android:text="Checkout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/checkoutBtn"
@@ -39,10 +38,10 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="8dp"/>
         <TextView
-                android:text="Your basket is empty"
-                style="@style/RoboTitleText"/>
+                style="@style/RoboTitleText"
+            android:id="@+id/basketEmpty"/>
         <TextView
-                android:text="Go back and add something there."
+            android:id="@+id/go_add_sth"
                 style="@style/RoboSubtitleText"/>
     </LinearLayout>
 </FrameLayout>

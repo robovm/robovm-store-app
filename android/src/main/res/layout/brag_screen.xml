@@ -14,14 +14,13 @@
             android:id="@+id/imageView1"
             android:layout_gravity="center"/>
     <TextView
-            android:text="Order Complete"
-            style="@style/RoboTitleText"/>
+            style="@style/RoboTitleText"
+            android:id="@+id/orderComplete"/>
     <TextView
-            android:text="We've received your order and we'll email you as soon as your items ship."
-            style="@style/RoboSubtitleText"/>
+            style="@style/RoboSubtitleText"
+            android:id="@+id/orderReceived"/>
     <Button
             style="@style/RoboButton"
-            android:text="@string/brag_to_friends"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/bragButton"

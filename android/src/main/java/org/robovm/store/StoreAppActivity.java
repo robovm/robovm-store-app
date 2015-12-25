@@ -105,7 +105,10 @@ public class StoreAppActivity extends Activity {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
         if (animated) {
-            transaction.setCustomAnimations(getInAnimationForFragment(fragment), getOutAnimationForFragment(fragment));
+            transaction.setCustomAnimations(getEnterAnimationForFragment(fragment),
+                    getExitAnimationForFragment(fragment),
+                    getPopEnterAnimationForFragment(fragment),
+                    getPopExitAnimationForFragment(fragment));
         }
         transaction.replace(R.id.contentArea, fragment);
         if (!isRoot) {
@@ -117,31 +120,53 @@ public class StoreAppActivity extends Activity {
         return transaction.commit();
     }
 
-    private int getInAnimationForFragment(Fragment fragment) {
-        int animIn = R.anim.enter;
+    private int getEnterAnimationForFragment(Fragment fragment) {
+        int animEnter = R.anim.enter_from_right;
 
         switch (fragment.getClass().getSimpleName()) {
-        case "ProductDetailsFragment":
-            animIn = R.anim.product_detail_in;
-            break;
-        case "BasketFragment":
-            animIn = R.anim.basket_in;
-            break;
+            case "ProductDetailsFragment":
+                animEnter = R.anim.product_detail_in;
+                break;
+            case "BasketFragment":
+                animEnter = R.anim.basket_in;
+                break;
         }
-        return animIn;
+        return animEnter;
     }
 
-    private int getOutAnimationForFragment(Fragment fragment) {
-        int animOut = R.anim.exit;
+    private int getExitAnimationForFragment(Fragment fragment) {
+        int animExit = R.anim.exit_to_left;
 
         switch (fragment.getClass().getSimpleName()) {
-        case "ProductDetailsFragment":
-            animOut = R.anim.product_detail_out;
-            break;
-        case "BasketFragment":
-            break;
+            case "ProductDetailsFragment":
+                animExit = R.anim.product_detail_out;
+                break;
         }
-        return animOut;
+        return animExit;
+    }
+
+    private int getPopEnterAnimationForFragment(Fragment fragment) {
+        int animPopEnter = R.anim.enter_from_left;
+
+        switch (fragment.getClass().getSimpleName()) {
+            case "ProductDetailsFragment":
+                animPopEnter = R.anim.no;
+                break;
+        }
+        return animPopEnter;
+    }
+
+    private int getPopExitAnimationForFragment(Fragment fragment) {
+        int animPopExit = R.anim.exit_to_right;
+        switch (fragment.getClass().getSimpleName()) {
+            case "ProductDetailsFragment":
+                animPopExit = R.anim.no;
+                break;
+            case "BasketFragment":
+                animPopExit = R.anim.basket_out;
+                break;
+        }
+        return animPopExit;
     }
 
     public void showProductDetail(Product product, int itemVerticalOffset) {
@@ -168,9 +193,13 @@ public class StoreAppActivity extends Activity {
     }
 
     public void showLogin() {
-        LoginFragment login = new LoginFragment();
-        login.setLoginSuccessListener(this::showAddress);
-        switchScreens(login);
+        if (RoboVMWebService.getInstance().isAuthenticated()) {
+            ((Runnable) this::showAddress).run();
+        } else {
+            LoginFragment login = new LoginFragment();
+            login.setLoginSuccessListener(this::showAddress);
+            switchScreens(login);
+        }
     }
 
     public void showAddress() {
