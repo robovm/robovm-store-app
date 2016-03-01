@@ -33,6 +33,7 @@ import org.robovm.apple.uikit.UIView;
 import org.robovm.store.model.Country;
 import org.robovm.store.model.User;
 import org.robovm.store.util.Countries;
+import org.robovm.store.util.I18N;
 import org.robovm.store.views.AutoCompleteTextEntry;
 import org.robovm.store.views.BottomButtonView;
 import org.robovm.store.views.CustomViewCell;
@@ -60,29 +61,29 @@ public class ShippingAddressViewController extends UITableViewController {
     public ShippingAddressViewController(User user) {
         this.user = user;
 
-        setTitle("Shipping");
+        setTitle(I18N.getLocalizedString(I18N.Key.shipping_title));
 
         // This hides the back button text when you leave this View Controller
         getNavigationItem().setBackBarButtonItem(new UIBarButtonItem("", UIBarButtonItemStyle.Plain));
         getTableView().setSeparatorStyle(UITableViewCellSeparatorStyle.None);
 
-        cells.add(new CustomViewCell(firstNameField = new TextEntryView("First Name", user.getFirstName())));
+        cells.add(new CustomViewCell(firstNameField = new TextEntryView(I18N.getLocalizedString(I18N.Key.first_name), user.getFirstName())));
 
-        cells.add(new CustomViewCell(lastNameField = new TextEntryView("Last Name", user.getLastName())));
+        cells.add(new CustomViewCell(lastNameField = new TextEntryView(I18N.getLocalizedString(I18N.Key.last_name), user.getLastName())));
 
-        cells.add(new CustomViewCell(phoneNumberField = new TextEntryView("Phone Number", user.getPhone(),
+        cells.add(new CustomViewCell(phoneNumberField = new TextEntryView(I18N.getLocalizedString(I18N.Key.phone_number), user.getPhone(),
                 UIKeyboardType.PhonePad)));
 
-        cells.add(new CustomViewCell(address1Field = new TextEntryView("Address", user.getAddress1(),
+        cells.add(new CustomViewCell(address1Field = new TextEntryView(I18N.getLocalizedString(I18N.Key.address), user.getAddress1(),
                 UITextAutocapitalizationType.Words)));
 
-        cells.add(new CustomViewCell(address2Field = new TextEntryView("Address", user.getAddress2(),
+        cells.add(new CustomViewCell(address2Field = new TextEntryView(I18N.getLocalizedString(I18N.Key.address), user.getAddress2(),
                 UITextAutocapitalizationType.Words)));
 
-        cells.add(new CustomViewCell(cityField = new TextEntryView("City", user.getCity(),
+        cells.add(new CustomViewCell(cityField = new TextEntryView(I18N.getLocalizedString(I18N.Key.city), user.getCity(),
                 UITextAutocapitalizationType.Words)));
 
-        cells.add(new CustomViewCell(zipCodeField = new TextEntryView("Postal Code", user.getZipCode(),
+        cells.add(new CustomViewCell(zipCodeField = new TextEntryView(I18N.getLocalizedString(I18N.Key.postal_code), user.getZipCode(),
                 UIKeyboardType.NumbersAndPunctuation)));
 
         String countryName = user.getCountry();
@@ -95,10 +96,10 @@ public class ShippingAddressViewController extends UITableViewController {
             }
         }
         cells.add(new CustomViewCell(countryField = new AutoCompleteTextEntry(
-                "Country", "Select your Country", countryName, this, (value) -> getStates())));
+                I18N.getLocalizedString(I18N.Key.country), I18N.getLocalizedString(I18N.Key.select_country), countryName, this, (value) -> getStates())));
 
         cells.add(new CustomViewCell(stateField = new AutoCompleteTextEntry(
-                "State", "Select your state", user.getState(), this)));
+                I18N.getLocalizedString(I18N.Key.state), I18N.getLocalizedString(I18N.Key.select_state), user.getState(), this)));
 
         getCountries();
         getStates();
@@ -108,7 +109,7 @@ public class ShippingAddressViewController extends UITableViewController {
         tableView.setTableFooterView(new UIView(new CGRect(0, 0, 0, BottomButtonView.HEIGHT)));
         tableView.reloadData();
 
-        getView().addSubview(bottomView = new BottomButtonView("Place Order", (button, event) -> placeOrder()));
+        getView().addSubview(bottomView = new BottomButtonView(I18N.getLocalizedString(I18N.Key.place_order), (button, event) -> placeOrder()));
     }
 
     public void placeOrder() {

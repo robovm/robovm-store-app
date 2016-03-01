@@ -31,6 +31,7 @@ import android.widget.*;
 import org.robovm.store.R;
 import org.robovm.store.api.RoboVMWebService;
 import org.robovm.store.util.Gravatar;
+import org.robovm.store.util.I18N;
 import org.robovm.store.views.CircleDrawable;
 
 public class LoginFragment extends Fragment {
@@ -106,7 +107,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void login(String username, String password) {
-        ProgressDialog progressDialog = ProgressDialog.show(getActivity(), "Please wait...", "Logging in", true);
+        ProgressDialog progressDialog = ProgressDialog.show(getActivity(), I18N.getLocalizedString(I18N.Key.please_wait), I18N.getLocalizedString(I18N.Key.logging_in), true);
         this.login.setEnabled(false);
         this.password.setEnabled(false);
 
@@ -114,7 +115,7 @@ public class LoginFragment extends Fragment {
             if (success && loginSuccessListener != null) {
                 loginSuccessListener.run();
             } else {
-                Toast.makeText(getActivity(), "Please verify your RoboVM account credentials and try again",
+                Toast.makeText(getActivity(), I18N.getLocalizedString(I18N.Key.verify_credentials),
                         Toast.LENGTH_LONG).show();
             }
 

@@ -44,6 +44,7 @@ import org.robovm.apple.uikit.UIViewContentMode;
 import org.robovm.store.model.Basket;
 import org.robovm.store.model.Order;
 import org.robovm.store.util.Colors;
+import org.robovm.store.util.I18N;
 import org.robovm.store.util.ImageCache;
 import org.robovm.store.views.BottomButtonView;
 import org.robovm.store.views.EmptyBasketView;
@@ -57,7 +58,7 @@ public class BasketViewController extends UITableViewController {
     private Runnable checkout;
 
     public BasketViewController(Basket basket) {
-        setTitle("Your Basket");
+        setTitle(I18N.getLocalizedString(I18N.Key.your_basket_title));
         // This hides the back button text when you leave this View Controller
         getNavigationItem().setBackBarButtonItem(new UIBarButtonItem("", UIBarButtonItemStyle.Plain));
 
@@ -67,7 +68,7 @@ public class BasketViewController extends UITableViewController {
         tableView.setRowHeight(75);
         tableView.setTableFooterView(new UIView(new CGRect(0, 0, 0, BottomButtonView.HEIGHT)));
 
-        getView().addSubview(bottomView = new BottomButtonView("Checkout", (b, e) -> {
+        getView().addSubview(bottomView = new BottomButtonView(I18N.getLocalizedString(I18N.Key.checkout), (b, e) -> {
             if (checkout != null) {
                 checkout.run();
             }

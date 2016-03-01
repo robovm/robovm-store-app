@@ -15,6 +15,10 @@
  */
 package org.robovm.store.api;
 
+import org.robovm.store.util.I18N;
+
+import java.util.List;
+
 public class ValidationError {
     private String field;
     private String message;
@@ -30,5 +34,48 @@ public class ValidationError {
     @Override
     public String toString() {
         return field != null ? message + ": " + field : message;
+    }
+
+    public static String getValidationAlertMessage(List<ValidationError> errors) {
+        String alertMessage = I18N.getLocalizedString(I18N.Key.unexpected_error);
+
+        if (errors != null) { // We handle only the first error.
+            ValidationError error = errors.get(0);
+
+            String message = error.getMessage();
+            String field = error.getField();
+            if (field == null) {
+                alertMessage = message;
+            } else {
+                switch (field) {
+                    case "firstName":
+                        alertMessage = I18N.getLocalizedString(I18N.Key.first_name_required);
+                        break;
+                    case "lastName":
+                        alertMessage = I18N.getLocalizedString(I18N.Key.last_name_required);
+                        break;
+                    case "address1":
+                        alertMessage = I18N.getLocalizedString(I18N.Key.address_required);
+                        break;
+                    case "city":
+                        alertMessage = I18N.getLocalizedString(I18N.Key.city_required);
+                        break;
+                    case "zipCode":
+                        alertMessage = I18N.getLocalizedString(I18N.Key.zip_code_required);
+                        break;
+                    case "phone":
+                        alertMessage = I18N.getLocalizedString(I18N.Key.phone_number_required);
+                        break;
+                    case "country":
+                        alertMessage = I18N.getLocalizedString(I18N.Key.country_required);
+                        break;
+                    default:
+                        alertMessage = message;
+                        break;
+                }
+            }
+        }
+
+        return alertMessage;
     }
 }

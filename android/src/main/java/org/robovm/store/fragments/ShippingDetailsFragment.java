@@ -29,6 +29,7 @@ import org.robovm.store.api.ValidationError;
 import org.robovm.store.model.Country;
 import org.robovm.store.model.User;
 import org.robovm.store.util.Countries;
+import org.robovm.store.util.I18N;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -150,7 +151,7 @@ public class ShippingDetailsFragment extends Fragment {
             user.setCountry(selectedCountry.getCode());
         }
 
-        ProgressDialog progressDialog = ProgressDialog.show(getActivity(), "Please wait...", "Placing Order", true);
+        ProgressDialog progressDialog = ProgressDialog.show(getActivity(), I18N.getLocalizedString(I18N.Key.please_wait), I18N.getLocalizedString(I18N.Key.placing_order), true);
 
         RoboVMWebService.getInstance().placeOrder(user, (response) -> {
             progressDialog.hide();
@@ -162,51 +163,14 @@ public class ShippingDetailsFragment extends Fragment {
             if (response.isSuccess()) {
                 RoboVMWebService.getInstance().getBasket().clear();
 
-                Toast.makeText(getActivity(), "Your order has been placed!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), I18N.getLocalizedString(I18N.Key.order_placed), Toast.LENGTH_LONG).show();
 
                 if (orderPlacedListener != null) {
                     orderPlacedListener.run();
                 }
             } else {
                 List<ValidationError> errors = response.getErrors();
-                String alertMessage = "An unexpected error occurred! Please try again later!";
-
-                if (errors != null) { // We handle only the first error.
-                    ValidationError error = errors.get(0);
-
-                    String message = error.getMessage();
-                    String field = error.getField();
-                    if (field == null) {
-                        alertMessage = message;
-                    } else {
-                        switch (field) {
-                        case "firstName":
-                            alertMessage = "First name is required";
-                            break;
-                        case "lastName":
-                            alertMessage = "Last name is required";
-                            break;
-                        case "address1":
-                            alertMessage = "Address is required";
-                            break;
-                        case "city":
-                            alertMessage = "City is required";
-                            break;
-                        case "zipCode":
-                            alertMessage = "ZIP code is required";
-                            break;
-                        case "phone":
-                            alertMessage = "Phone number is required";
-                            break;
-                        case "country":
-                            alertMessage = "Country is required";
-                            break;
-                        default:
-                            alertMessage = message;
-                            break;
-                        }
-                    }
-                }
+                String alertMessage = ValidationError.getValidationAlertMessage(errors);
                 Toast.makeText(getActivity(), alertMessage, Toast.LENGTH_LONG).show();
             }
         });

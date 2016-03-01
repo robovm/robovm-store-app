@@ -39,6 +39,7 @@ import org.robovm.store.api.RoboVMWebService;
 import org.robovm.store.model.Product;
 import org.robovm.store.util.Action;
 import org.robovm.store.util.Colors;
+import org.robovm.store.util.I18N;
 import org.robovm.store.views.SpinnerCell;
 import org.robovm.store.views.TopAlignedImageView;
 
@@ -48,7 +49,7 @@ public class ProductListViewController extends UITableViewController {
     private ProductListViewModel model;
 
     public ProductListViewController() {
-        setTitle("RoboVM Store");
+        setTitle(I18N.getLocalizedString(I18N.Key.products_list_title));
 
         // Hide the back button text when you leave this View Controller.
         getNavigationItem().setBackBarButtonItem(new UIBarButtonItem("", UIBarButtonItemStyle.Plain));

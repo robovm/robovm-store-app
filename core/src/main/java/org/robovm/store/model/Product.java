@@ -15,6 +15,8 @@
  */
 package org.robovm.store.model;
 
+import org.robovm.store.util.I18N;
+
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +51,7 @@ public class Product {
     }
 
     public String getPriceDescription() {
-        return price < 0.01 ? "Free" : NumberFormat.getCurrencyInstance().format(price);
+        return price < 0.01 ? I18N.getLocalizedString(I18N.Key.free) : NumberFormat.getCurrencyInstance().format(price);
     }
 
     public ProductType getType() {
