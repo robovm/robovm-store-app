@@ -40,9 +40,7 @@ public class Countries {
             countries = gson.fromJson(
                     IOUtils.toString(Countries.class.getResourceAsStream("/countries.json"),
                             Charset.defaultCharset()), Country[].class);
-        } catch (JsonSyntaxException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (JsonSyntaxException | IOException e) {
             e.printStackTrace();
         }
     }

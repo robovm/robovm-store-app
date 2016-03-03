@@ -54,4 +54,13 @@ public class Basket implements Iterable<Order> {
     public void removeOnBasketChangeListener(Runnable listener) {
         basketChangeListeners.remove(listener);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("Basket\n");
+        for (Order order : orders) {
+            sb.append(order.toString()).append("\n");
+        }
+        return sb.toString();
+    }
 }

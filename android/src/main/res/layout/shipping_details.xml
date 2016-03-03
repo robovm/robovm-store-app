@@ -5,7 +5,7 @@
               android:layout_height="fill_parent">
     <TextView
             style="?android:listSeparatorTextViewStyle"
-            android:text="Shipping information"
+            android:text="@string/shippingInformation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -20,7 +20,7 @@
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:paddingRight="16dp"
                 android:paddingLeft="16dp">
             <EditText
@@ -28,26 +28,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/firstName"
-                    android:hint="First Name"/>
+                    android:hint="@string/firstName"/>
             <EditText
                     android:inputType="textPersonName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/lastName"
-                    android:hint="Last Name"/>
+                    android:hint="@string/lastName"/>
             <EditText
                     android:inputType="phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/phone"
-                    android:hint="Phone number"
+                    android:hint="@string/phoneNumber"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"/>
             <EditText
                     android:inputType="textPostalAddress"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Street Address 1"
+                    android:hint="@string/streetAddress1"
                     android:id="@+id/streetAddress1"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"/>
@@ -55,7 +55,7 @@
                     android:inputType="textPostalAddress"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Street Address 2"
+                    android:hint="@string/streetAddress2"
                     android:id="@+id/streetAddress2"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"/>
@@ -63,7 +63,7 @@
                     android:inputType="textPostalAddress"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:hint="City"
+                    android:hint="@string/city"
                     android:id="@+id/city"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"/>
@@ -71,7 +71,7 @@
                     android:inputType="text"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Postal Code"
+                    android:hint="@string/postalCode"
                     android:id="@+id/postalCode"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"/>
@@ -79,7 +79,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/country"
-                    android:hint="Country"
+                    android:hint="@string/country"
                     android:imeOptions="actionNext"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"/>
@@ -87,13 +87,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/state"
-                    android:hint="State"
+                    android:hint="@string/state"
                     android:imeOptions="actionDone"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"/>
             <Button
                     style="@style/RoboButton"
-                    android:text="Place Order"
+                    android:text="@string/placeOrder"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/placeOrder"

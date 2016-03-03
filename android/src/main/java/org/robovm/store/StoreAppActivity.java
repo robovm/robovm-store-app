@@ -21,6 +21,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import org.robovm.store.api.RoboVMWebService;
@@ -64,19 +65,19 @@ public class StoreAppActivity extends Activity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("baseFragment", baseFragment);
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         baseFragment = savedInstanceState.getInt("baseFragment");
     }
 
     @Override
-    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+    public boolean onMenuItemSelected(int featureId, @NonNull MenuItem item) {
         switch (item.getItemId()) {
         case R.id.cart_menu_item:
             showBasket();
@@ -174,9 +175,15 @@ public class StoreAppActivity extends Activity {
     }
 
     public void showAddress() {
-        ShippingDetailsFragment shipping = new ShippingDetailsFragment(RoboVMWebService.getInstance().getCurrentUser());
-        shipping.setOrderPlacedListener(this::orderCompleted);
+        ShippingDetailsFragment shipping = new ShippingDetailsFragment();
+        shipping.setShippingDetailsEnteredListener(this::showPayment);
         switchScreens(shipping);
+    }
+
+    public void showPayment() {
+        PaymentDetailsFragment payment = new PaymentDetailsFragment();
+        payment.setPaymentDetailsEnteredListener(this::orderCompleted);
+        switchScreens(payment);
     }
 
     public void orderCompleted() {

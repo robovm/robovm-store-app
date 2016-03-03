@@ -98,4 +98,18 @@ public class User {
         this.country = country;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address1='" + address1 + '\'' +
+                ", address2='" + address2 + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", phone='" + phone + '\'' +
+                ", country='" + country + '\'' +
+                '}';
+    }
 }

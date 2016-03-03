@@ -17,7 +17,6 @@
 package org.robovm.store.fragments;
 
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,9 +24,9 @@ import android.view.ViewGroup;
 import android.widget.*;
 import org.robovm.store.R;
 import org.robovm.store.api.RoboVMWebService;
-import org.robovm.store.api.ValidationError;
 import org.robovm.store.model.Country;
 import org.robovm.store.model.User;
+import org.robovm.store.payments.PaymentAPI;
 import org.robovm.store.util.Countries;
 
 import java.util.ArrayList;
@@ -46,14 +45,10 @@ public class ShippingDetailsFragment extends Fragment {
     private EditText phoneNumberField;
     private AutoCompleteTextView countryField;
 
-    private Runnable orderPlacedListener;
+    private Runnable shippingDetailsEnteredListener;
 
     public ShippingDetailsFragment() {
-        this(new User());
-    }
-
-    public ShippingDetailsFragment(User user) {
-        this.user = user;
+        this.user = RoboVMWebService.getInstance().getCurrentUser();
     }
 
     @Override
@@ -105,7 +100,7 @@ public class ShippingDetailsFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        placeOrder.setOnClickListener((b) -> placeOrder());
+        placeOrder.setOnClickListener((b) -> saveShippingDetails());
 
         loadCountries();
         loadStates();
@@ -130,7 +125,7 @@ public class ShippingDetailsFragment extends Fragment {
         }
     }
 
-    private void placeOrder() {
+    private void saveShippingDetails() {
         EditText[] entries = new EditText[] { phoneNumberField, address1Field, address2Field, cityField, stateField,
                 zipCodeField, countryField };
         for (EditText entry : entries) {
@@ -150,69 +145,13 @@ public class ShippingDetailsFragment extends Fragment {
             user.setCountry(selectedCountry.getCode());
         }
 
-        ProgressDialog progressDialog = ProgressDialog.show(getActivity(), "Please wait...", "Placing Order", true);
+        if (shippingDetailsEnteredListener != null) {
+            shippingDetailsEnteredListener.run();
+        }
 
-        RoboVMWebService.getInstance().placeOrder(user, (response) -> {
-            progressDialog.hide();
-            progressDialog.dismiss();
-            for (EditText entry : entries) {
-                entry.setEnabled(true);
-            }
-
-            if (response.isSuccess()) {
-                RoboVMWebService.getInstance().getBasket().clear();
-
-                Toast.makeText(getActivity(), "Your order has been placed!", Toast.LENGTH_LONG).show();
-
-                if (orderPlacedListener != null) {
-                    orderPlacedListener.run();
-                }
-            } else {
-                List<ValidationError> errors = response.getErrors();
-                String alertMessage = "An unexpected error occurred! Please try again later!";
-
-                if (errors != null) { // We handle only the first error.
-                    ValidationError error = errors.get(0);
-
-                    String message = error.getMessage();
-                    String field = error.getField();
-                    if (field == null) {
-                        alertMessage = message;
-                    } else {
-                        switch (field) {
-                        case "firstName":
-                            alertMessage = "First name is required";
-                            break;
-                        case "lastName":
-                            alertMessage = "Last name is required";
-                            break;
-                        case "address1":
-                            alertMessage = "Address is required";
-                            break;
-                        case "city":
-                            alertMessage = "City is required";
-                            break;
-                        case "zipCode":
-                            alertMessage = "ZIP code is required";
-                            break;
-                        case "phone":
-                            alertMessage = "Phone number is required";
-                            break;
-                        case "country":
-                            alertMessage = "Country is required";
-                            break;
-                        default:
-                            alertMessage = message;
-                            break;
-                        }
-                    }
-                }
-                Toast.makeText(getActivity(), alertMessage, Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
-    public void setOrderPlacedListener(Runnable orderPlacedListener) {
-        this.orderPlacedListener = orderPlacedListener;
+    public void setShippingDetailsEnteredListener(Runnable shippingDetailsEnteredListener) {
+        this.shippingDetailsEnteredListener = shippingDetailsEnteredListener;
     }
 }

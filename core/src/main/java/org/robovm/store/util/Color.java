@@ -23,6 +23,7 @@ class Color {
     public static final Color Green = new Color(0x93C624);
     public static final Color Gray = new Color(0x444444);
     public static final Color LightGray = new Color(0x666666);
+    public static final Color Red = new Color(0xEF4100);
 
     public int hex;
     public double r, g, b;

@@ -26,4 +26,5 @@ public class Colors {
     public static final int Green = Color.Green.hex;
     public static final int Gray = Color.Gray.hex;
     public static final int LightGray = Color.LightGray.hex;
+    public static final int Red = Color.Red.hex;
 }

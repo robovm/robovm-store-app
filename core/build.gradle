@@ -23,6 +23,7 @@ dependencies {
 	compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
 	compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
 	compile 'com.google.code.gson:gson:2.3.1'
+    compile 'com.paypal.sdk:rest-api-sdk:1.2.9'
 	
 	testCompile 'org.hamcrest:hamcrest-all:1.3'
     testCompile 'junit:junit:4.11'

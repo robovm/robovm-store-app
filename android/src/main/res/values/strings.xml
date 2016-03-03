@@ -2,4 +2,19 @@
     <string name="app_name">RoboVM Store App</string>
     <string name="brag_on">Brag on:</string>
     <string name="brag_to_friends">Brag to Friends</string>
+    <string name="lastName">Last Name</string>
+    <string name="phoneNumber">Phone number</string>
+    <string name="firstName">First Name</string>
+    <string name="streetAddress1">Street Address 1</string>
+    <string name="streetAddress2">Street Address 2</string>
+    <string name="city">City</string>
+    <string name="postalCode">Postal Code</string>
+    <string name="country">Country</string>
+    <string name="state">State</string>
+    <string name="placeOrder">Place Order</string>
+    <string name="shippingInformation">Shipping information</string>
+    <string name="paymentInformation">Payment information</string>
+    <string name="creditcardNumber">Creditcard number</string>
+    <string name="expireMonth">Expire month</string>
+    <string name="expireYear">Expire year</string>
 </resources>

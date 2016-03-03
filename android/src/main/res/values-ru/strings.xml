@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">RoboVM Магазин</string>
+    <string name="brag_on">Поделиться:</string>
+    <string name="brag_to_friends">Сообщить друзьям</string>
+    <string name="lastName">Фамилия</string>
+    <string name="phoneNumber">Телефон</string>
+    <string name="firstName">Имя</string>
+    <string name="streetAddress1">Адрес 1</string>
+    <string name="streetAddress2">Адрес 2</string>
+    <string name="city">Город</string>
+    <string name="postalCode">Почтовый индекс</string>
+    <string name="country">Страна</string>
+    <string name="state">Регион</string>
+    <string name="placeOrder">Заказать</string>
+    <string name="shippingInformation">Информация о доставке</string>
+    <string name="paymentInformation">Информация о платеже</string>
+    <string name="creditcardNumber">Номер карты</string>
+    <string name="expireMonth">Месяц окончания дествия</string>
+    <string name="expireYear">Год окончания действия</string>
+</resources>
