@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import org.robovm.store.R;
+import org.robovm.store.api.GoogleAnalyticsService;
 
 public class BragFragment extends Fragment {
     @Override
@@ -49,6 +50,7 @@ public class BragFragment extends Fragment {
             intent.setType("text/plain");
             intent.putExtra(Intent.EXTRA_TEXT, message);
             startActivity(Intent.createChooser(intent, getResources().getString(R.string.brag_on)));
+            GoogleAnalyticsService.getInstance().reportAnalyticEvent("Action", "Tweet", "tweet", 1);
         } catch (Exception e) {
             e.printStackTrace();
         }

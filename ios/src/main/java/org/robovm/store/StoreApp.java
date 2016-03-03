@@ -35,11 +35,13 @@ import org.robovm.apple.uikit.UIScreen;
 import org.robovm.apple.uikit.UIStatusBarStyle;
 import org.robovm.apple.uikit.UIViewController;
 import org.robovm.apple.uikit.UIWindow;
+import org.robovm.store.api.GoogleAnalyticsService;
 import org.robovm.store.api.RoboVMWebService;
 import org.robovm.store.api.RoboVMWebService.ActionWrapper;
 import org.robovm.store.model.Product;
 import org.robovm.store.util.Action;
 import org.robovm.store.util.Colors;
+import org.robovm.store.util.GoogleAnalyticsServiceiOS;
 import org.robovm.store.util.ImageCache;
 import org.robovm.store.viewcontrollers.BasketViewController;
 import org.robovm.store.viewcontrollers.LoginViewController;
@@ -180,6 +182,7 @@ public class StoreApp extends UIApplicationDelegateAdapter {
 
     public static void main(String[] args) {
         try (NSAutoreleasePool pool = new NSAutoreleasePool()) {
+            GoogleAnalyticsService.setInstance(new GoogleAnalyticsServiceiOS());
             UIApplication.main(args, null, StoreApp.class);
         }
     }

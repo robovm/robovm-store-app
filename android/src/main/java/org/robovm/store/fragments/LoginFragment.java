@@ -30,6 +30,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 import org.robovm.store.R;
 import org.robovm.store.api.RoboVMWebService;
+import org.robovm.store.api.GoogleAnalyticsService;
 import org.robovm.store.util.Gravatar;
 import org.robovm.store.views.CircleDrawable;
 
@@ -55,6 +56,7 @@ public class LoginFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        GoogleAnalyticsService.getInstance().reportAnalyticScreen("Login");
         if (ROBOVM_ACCOUNT_EMAIL == null || ROBOVM_ACCOUNT_EMAIL.isEmpty()) {
             return createInstructions(inflater, container, savedInstanceState);
         }
@@ -67,6 +69,7 @@ public class LoginFragment extends Fragment {
         Spanned coloredText = Html.fromHtml(
                 "<b><font color='#000080'>static</font></b> String <b><i><font color='#660E7A'>ROBOVM_ACCOUNT_EMAIL</font></i></b> = <b><font color='#008000'>\"...\"</font>;</b>");
         textView.setText(coloredText, TextView.BufferType.SPANNABLE);
+        GoogleAnalyticsService.getInstance().reportAnalyticEvent("Errors", "Missing Email", "Email", 1);
 
         return view;
     }
@@ -116,6 +119,7 @@ public class LoginFragment extends Fragment {
             } else {
                 Toast.makeText(getActivity(), "Please verify your RoboVM account credentials and try again",
                         Toast.LENGTH_LONG).show();
+                GoogleAnalyticsService.getInstance().reportAnalyticEvent("Errors", "Login Failed", "Login", 1);
             }
 
             this.login.setEnabled(true);

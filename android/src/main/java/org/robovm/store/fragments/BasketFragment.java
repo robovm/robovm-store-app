@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import org.robovm.store.R;
+import org.robovm.store.api.GoogleAnalyticsService;
 import org.robovm.store.api.RoboVMWebService;
 import org.robovm.store.model.Basket;
 import org.robovm.store.model.Order;
@@ -51,6 +52,7 @@ public class BasketFragment extends ListFragment {
 
     @Override
     public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        GoogleAnalyticsService.getInstance().reportAnalyticScreen("Basket");
         View shoppingCartView = inflater.inflate(R.layout.basket, container, false);
 
         checkoutButton = (Button) shoppingCartView.findViewById(R.id.checkoutBtn);

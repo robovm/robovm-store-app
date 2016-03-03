@@ -41,6 +41,7 @@ import org.robovm.apple.uikit.UITableViewModel;
 import org.robovm.apple.uikit.UITableViewRowAnimation;
 import org.robovm.apple.uikit.UIView;
 import org.robovm.apple.uikit.UIViewContentMode;
+import org.robovm.store.api.GoogleAnalyticsService;
 import org.robovm.store.model.Basket;
 import org.robovm.store.model.Order;
 import org.robovm.store.util.Colors;
@@ -81,6 +82,12 @@ public class BasketViewController extends UITableViewController {
         totalAmount.sizeToFit();
         getNavigationItem().setRightBarButtonItem(new UIBarButtonItem(totalAmount));
         updateTotals();
+    }
+
+    @Override
+    public void viewDidAppear(boolean animated) {
+        super.viewDidAppear(animated);
+        GoogleAnalyticsService.getInstance().reportAnalyticScreen("Basket");
     }
 
     public void updateTotals() {

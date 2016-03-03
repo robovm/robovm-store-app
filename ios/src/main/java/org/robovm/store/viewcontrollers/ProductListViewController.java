@@ -34,6 +34,7 @@ import org.robovm.apple.uikit.UITableViewCellSelectionStyle;
 import org.robovm.apple.uikit.UITableViewCellSeparatorStyle;
 import org.robovm.apple.uikit.UITableViewController;
 import org.robovm.apple.uikit.UITableViewModel;
+import org.robovm.store.api.GoogleAnalyticsService;
 import org.robovm.store.StoreApp;
 import org.robovm.store.api.RoboVMWebService;
 import org.robovm.store.model.Product;
@@ -58,6 +59,12 @@ public class ProductListViewController extends UITableViewController {
         tableView.setModel(model = new ProductListViewModel());
 
         getData();
+    }
+
+    @Override
+    public void viewDidAppear(boolean animated) {
+        super.viewDidAppear(animated);
+        GoogleAnalyticsService.getInstance().reportAnalyticScreen("Product List");
     }
 
     private void getData() {

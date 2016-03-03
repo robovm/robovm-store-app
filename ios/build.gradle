@@ -26,6 +26,7 @@ robovm {
 dependencies {
     compile "org.robovm:robovm-rt:${roboVMVersion}"
     compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
+    compile "org.robovm:robopods-google-analytics-ios:${roboVMVersion}"
     testCompile "junit:junit:4.12"
     compile project(':core')
 }

@@ -23,6 +23,7 @@ import org.robovm.apple.uikit.UIBarButtonItemStyle;
 import org.robovm.apple.uikit.UIScrollView;
 import org.robovm.apple.uikit.UIView;
 import org.robovm.apple.uikit.UIViewController;
+import org.robovm.store.api.GoogleAnalyticsService;
 import org.robovm.store.api.RoboVMWebService;
 import org.robovm.store.util.ProgressUI;
 import org.robovm.store.views.LoginView;
@@ -56,6 +57,12 @@ public class LoginViewController extends UIViewController {
     }
 
     @Override
+    public void viewDidAppear(boolean animated) {
+        super.viewDidAppear(animated);
+        GoogleAnalyticsService.getInstance().reportAnalyticScreen("Login");
+    }
+
+    @Override
     public void viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews();
 
@@ -75,6 +82,7 @@ public class LoginViewController extends UIViewController {
         getView().addSubview(scrollView = new UIScrollView(getView().getBounds()));
         if (shouldShowInstructions()) {
             scrollView.addSubview(contentView = new PrefillRoboVMAccountInstructionsView());
+            GoogleAnalyticsService.getInstance().reportAnalyticEvent("Errors", "Missing Email", "Email", 1);
         } else {
             loginView = new LoginView(ROBOVM_ACCOUNT_EMAIL);
             loginView
@@ -104,6 +112,7 @@ public class LoginViewController extends UIViewController {
                         loginView.getPasswordField().becomeFirstResponder();
                     }
                 });
+                GoogleAnalyticsService.getInstance().reportAnalyticEvent("Errors", "Login Failed", "Login", 1);
             }
         });
     }

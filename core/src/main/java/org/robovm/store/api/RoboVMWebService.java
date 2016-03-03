@@ -146,6 +146,8 @@ public class RoboVMWebService {
     }
 
     public void placeOrder(User user, Action<APIResponse> completion) {
+        GoogleAnalyticsService.getInstance().reportAnalyticEvent("Action", "Place Order", "Order", 1);
+
         Objects.requireNonNull(user, "user");
         Objects.requireNonNull(completion);
 

@@ -23,11 +23,13 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
+import org.robovm.store.api.GoogleAnalyticsService;
 import org.robovm.store.api.RoboVMWebService;
 import org.robovm.store.api.RoboVMWebService.ActionWrapper;
 import org.robovm.store.fragments.*;
 import org.robovm.store.model.Product;
 import org.robovm.store.util.Action;
+import org.robovm.store.util.GoogleAnalyticsServiceAndroid;
 import org.robovm.store.util.ImageCache;
 import org.robovm.store.util.Images;
 
@@ -50,6 +52,8 @@ public class StoreAppActivity extends Activity {
                 runOnUiThread(() -> action.invoke(result));
             }
         };
+
+        GoogleAnalyticsService.setInstance(new GoogleAnalyticsServiceAndroid(getApplicationContext()));
 
         setContentView(R.layout.main);
 

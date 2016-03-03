@@ -25,6 +25,7 @@ import android.view.*;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.*;
 import org.robovm.store.R;
+import org.robovm.store.api.GoogleAnalyticsService;
 import org.robovm.store.api.RoboVMWebService;
 import org.robovm.store.model.Basket;
 import org.robovm.store.model.Product;
@@ -48,6 +49,7 @@ public class ProductListFragment extends ListFragment {
 
     @Override
     public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        GoogleAnalyticsService.getInstance().reportAnalyticScreen("Product List");
         return inflater.inflate(R.layout.robovm_list_layout, container, false);
     }
 

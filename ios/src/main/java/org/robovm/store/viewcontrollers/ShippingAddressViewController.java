@@ -30,6 +30,7 @@ import org.robovm.apple.uikit.UITableViewController;
 import org.robovm.apple.uikit.UITableViewModel;
 import org.robovm.apple.uikit.UITextAutocapitalizationType;
 import org.robovm.apple.uikit.UIView;
+import org.robovm.store.api.GoogleAnalyticsService;
 import org.robovm.store.model.Country;
 import org.robovm.store.model.User;
 import org.robovm.store.util.Countries;
@@ -38,6 +39,7 @@ import org.robovm.store.views.BottomButtonView;
 import org.robovm.store.views.CustomViewCell;
 import org.robovm.store.views.StringSelectionCell;
 import org.robovm.store.views.TextEntryView;
+
 
 public class ShippingAddressViewController extends UITableViewController {
     private final User user;
@@ -109,6 +111,12 @@ public class ShippingAddressViewController extends UITableViewController {
         tableView.reloadData();
 
         getView().addSubview(bottomView = new BottomButtonView("Place Order", (button, event) -> placeOrder()));
+    }
+
+    @Override
+    public void viewDidAppear(boolean animated) {
+        super.viewDidAppear(animated);
+        GoogleAnalyticsService.getInstance().reportAnalyticScreen("Shipping Address");
     }
 
     public void placeOrder() {

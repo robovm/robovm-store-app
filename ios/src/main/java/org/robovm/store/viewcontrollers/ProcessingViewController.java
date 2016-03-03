@@ -39,6 +39,7 @@ import org.robovm.apple.uikit.UIView;
 import org.robovm.apple.uikit.UIViewAnimationCurve;
 import org.robovm.apple.uikit.UIViewContentMode;
 import org.robovm.apple.uikit.UIViewController;
+import org.robovm.store.api.GoogleAnalyticsService;
 import org.robovm.store.api.RoboVMWebService;
 import org.robovm.store.api.ValidationError;
 import org.robovm.store.model.User;
@@ -178,6 +179,7 @@ public class ProcessingViewController extends UIViewController {
                                         "I just built a native iOS app with Java using #RoboVM and all I got was this free T-shirt!");
                                 presentViewController(svc, true, null);
                             });
+            GoogleAnalyticsService.getInstance().reportAnalyticEvent("Action", "Tweet", "tweet", 1);
         }
     }
 

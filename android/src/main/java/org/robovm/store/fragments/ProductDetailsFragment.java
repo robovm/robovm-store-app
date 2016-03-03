@@ -28,6 +28,7 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 import org.robovm.store.R;
+import org.robovm.store.api.GoogleAnalyticsService;
 import org.robovm.store.api.RoboVMWebService;
 import org.robovm.store.model.*;
 import org.robovm.store.util.*;
@@ -84,6 +85,7 @@ public class ProductDetailsFragment extends Fragment implements ViewTreeObserver
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        GoogleAnalyticsService.getInstance().reportAnalyticScreen("Product Detail");
         return inflater.inflate(R.layout.product_detail, null, true);
     }
 

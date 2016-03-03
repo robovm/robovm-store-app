@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import org.robovm.store.R;
+import org.robovm.store.api.GoogleAnalyticsService;
 import org.robovm.store.api.RoboVMWebService;
 import org.robovm.store.api.ValidationError;
 import org.robovm.store.model.Country;
@@ -64,6 +65,7 @@ public class ShippingDetailsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        GoogleAnalyticsService.getInstance().reportAnalyticScreen("Shipping Address");
         View shippingDetailsView = inflater.inflate(R.layout.shipping_details, container, false);
 
         Button placeOrder = (Button) shippingDetailsView.findViewById(R.id.placeOrder);

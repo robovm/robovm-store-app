@@ -46,6 +46,7 @@ import org.robovm.apple.uikit.UITableViewModel;
 import org.robovm.apple.uikit.UITableViewScrollPosition;
 import org.robovm.apple.uikit.UIView;
 import org.robovm.apple.uikit.UIViewContentMode;
+import org.robovm.store.api.GoogleAnalyticsService;
 import org.robovm.store.StoreApp;
 import org.robovm.store.model.Order;
 import org.robovm.store.model.Product;
@@ -91,6 +92,12 @@ public class ProductDetailViewController extends UITableViewController {
         bottomView.setButtonTapListener((b, e) -> addToBasket());
 
         getView().addSubview(bottomView);
+    }
+
+    @Override
+    public void viewDidAppear(boolean animated) {
+        super.viewDidAppear(animated);
+        GoogleAnalyticsService.getInstance().reportAnalyticScreen("Product Detail");
     }
 
     private void addToBasket() {
