@@ -23,6 +23,7 @@ public class Order {
     String id;
     String size;
     String color;
+    int quantity;
 
     public Order(Order order) {
         setProduct(order.getProduct());
@@ -58,6 +59,15 @@ public class Order {
     public ProductSize getSize() {
         return productSize;
     }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
 
     public void setSize(ProductSize size) {
         this.productSize = size;

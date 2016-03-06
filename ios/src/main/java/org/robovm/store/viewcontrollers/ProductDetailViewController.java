@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.robovm.apple.audiotoolbox.AudioServices;
 import org.robovm.apple.coreanimation.CAAnimation;
 import org.robovm.apple.coreanimation.CAAnimationCalculationMode;
 import org.robovm.apple.coreanimation.CAAnimationDelegateAdapter;
@@ -67,13 +68,15 @@ public class ProductDetailViewController extends UITableViewController {
     private final Order order;
 
     private final BottomButtonView bottomView;
-    private StringSelectionCell colorCell, sizeCell;
+    private StringSelectionCell colorCell, sizeCell, quantityCell;
     private JBKenBurnsView imageView;
     private final UIImage tshirtIcon;
 
     private List<ProductColor> colorOptions;
     private List<ProductSize> sizeOptions;
     private List<String> imageUrls;
+
+    private static final int MAX_QUANTITY = 5;
 
     public ProductDetailViewController(Product product) {
         this.currentProduct = product;
@@ -117,7 +120,9 @@ public class ProductDetailViewController extends UITableViewController {
         });
 
         if (addedToBasket != null) {
-            addedToBasket.invoke(new Order(order));
+            for(int i=0; i < order.getQuantity(); i++) {
+                addedToBasket.invoke(new Order(order));
+            }
         }
     }
 
@@ -267,6 +272,22 @@ public class ProductDetailViewController extends UITableViewController {
             order.setColor(color);
         });
         cells.add(colorCell);
+
+        quantityCell = new StringSelectionCell(getView());
+        quantityCell.setText("Quantity");
+        List<String> quantityOptions = new ArrayList<>();
+        for (int i=1; i<=MAX_QUANTITY; i++) {
+            quantityOptions.add(Integer.toString(i));
+        }
+        quantityCell.setItems(quantityOptions);
+        quantityCell.setDetailText(Integer.toString(quantityCell.getSelectedIndex()+1));
+        quantityCell.setSelectionListener(new Action<String>() {
+            @Override
+            public void invoke(String s) {
+                order.setQuantity(quantityCell.getSelectedIndex() + 1);
+            }
+        });
+        cells.add(quantityCell);
 
         return cells;
     }
