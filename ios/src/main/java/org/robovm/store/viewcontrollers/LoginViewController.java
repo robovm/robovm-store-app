@@ -33,7 +33,7 @@ public class LoginViewController extends UIViewController {
     // TODO: Enter your RoboVM account email address here
     // If you do not have a RoboVM Account please sign up here:
     // https://account.robovm.com/#/register
-    private static final String ROBOVM_ACCOUNT_EMAIL = "";
+    // private static final String ROBOVM_ACCOUNT_EMAIL = "";
 
     private UIView contentView;
     private LoginView loginView;
@@ -52,7 +52,7 @@ public class LoginViewController extends UIViewController {
     }
 
     public boolean shouldShowInstructions() {
-        return ROBOVM_ACCOUNT_EMAIL == null || ROBOVM_ACCOUNT_EMAIL.isEmpty();
+        return false;//ROBOVM_ACCOUNT_EMAIL == null || ROBOVM_ACCOUNT_EMAIL.isEmpty();
     }
 
     @Override
@@ -71,16 +71,10 @@ public class LoginViewController extends UIViewController {
     @Override
     public void loadView() {
         super.loadView();
-
         getView().addSubview(scrollView = new UIScrollView(getView().getBounds()));
-        if (shouldShowInstructions()) {
-            scrollView.addSubview(contentView = new PrefillRoboVMAccountInstructionsView());
-        } else {
-            loginView = new LoginView(ROBOVM_ACCOUNT_EMAIL);
-            loginView
-                    .setLoginSuccessListener((v) -> login(ROBOVM_ACCOUNT_EMAIL, loginView.getPasswordField().getText()));
+        loginView = new LoginView("");
+        loginView.setLoginSuccessListener((v) -> login(loginView.getEmailField().getText(), loginView.getPasswordField().getText()));
             scrollView.addSubview(contentView = loginView);
-        }
     }
 
     private void login(String username, String password) {

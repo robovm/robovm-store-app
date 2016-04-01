@@ -66,12 +66,13 @@ public class LoginView extends UIView {
 
         emailField = new UITextField(new CGRect(10, 10, 300, 30));
         emailField.setBorderStyle(UITextBorderStyle.RoundedRect);
-        emailField.setText(robovmAccountEmail);
+        emailField.setText("Email");
         emailField.setTranslatesAutoresizingMaskIntoConstraints(false);
         emailField.setDelegate(new UITextFieldDelegateAdapter() {
             @Override
-            public boolean shouldBeginEditing(UITextField textField) {
-                return false;
+            public boolean shouldReturn(UITextField textField) {
+                textField.resignFirstResponder();
+                return true;
             }
         });
         addSubview(emailField);
@@ -110,7 +111,7 @@ public class LoginView extends UIView {
             }
         });
 
-        passwordField.becomeFirstResponder();
+        emailField.becomeFirstResponder();
     }
 
     private void displayGravatar(String email) {

@@ -55,9 +55,6 @@ public class LoginFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (ROBOVM_ACCOUNT_EMAIL == null || ROBOVM_ACCOUNT_EMAIL.isEmpty()) {
-            return createInstructions(inflater, container, savedInstanceState);
-        }
         return createLoginView(inflater, container, savedInstanceState);
     }
 
@@ -78,13 +75,13 @@ public class LoginFragment extends Fragment {
         loadUserImage();
 
         EditText textView = (EditText) view.findViewById(R.id.email);
-        textView.setEnabled(false);
-        textView.setText(ROBOVM_ACCOUNT_EMAIL);
+        textView.setEnabled(true);
+        textView.setText("Username");
 
         password = (EditText) view.findViewById(R.id.password);
         login = (Button) view.findViewById(R.id.signInBtn);
         login.setOnClickListener((b) -> {
-            login(ROBOVM_ACCOUNT_EMAIL, password.getText().toString());
+            login(textView.getText().toString(), password.getText().toString());
         });
 
         return view;
